@@ -62,8 +62,8 @@ const TemporalGraphExplorer = () => {
     // Simulate API call with delayed response
     setTimeout(() => {
       // Filter nodes and edges based on timestamp (more would appear over time)
-      const timeIndex = timelineData.findIndex(t => t.timestamp === timestamp);
-      const nodeCount = timelineData[timeIndex]?.nodeCount || 45;
+      //const timeIndex = timelineData.findIndex(t => t.timestamp === timestamp);
+      //const nodeCount = timelineData[timeIndex]?.nodeCount || 45;
       
       // Base nodes that are always present
       const baseNodes = [

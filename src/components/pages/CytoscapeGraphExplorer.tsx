@@ -229,7 +229,6 @@ const CytoscapeGraphExplorer = () => {
     // Simulate API call with delayed response
     setTimeout(() => {
       // Filter nodes and edges based on timestamp (more would appear over time)
-      const timeIndex = timelineData.findIndex(t => t.timestamp === timestamp);
       
       // Base nodes that are always present
       const baseNodes = [

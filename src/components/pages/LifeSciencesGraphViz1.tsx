@@ -30,7 +30,8 @@ interface GraphEdge {
   };
 }
 
-interface GraphData {
+// Either use the interface or export it for use elsewhere
+export interface GraphData {
   nodes: GraphNode[];
   edges: GraphEdge[];
   metadata?: {
@@ -56,7 +57,7 @@ interface GraphVisualizationProps {
 }
 
 const GraphVisualization = React.memo(({ graphData, onNodeSelect, layoutType }: GraphVisualizationProps) => {
-  const cyRef = useRef<any>(null);
+  const cyRef = useRef<cytoscape.Core | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -232,6 +233,9 @@ const GraphVisualization = React.memo(({ graphData, onNodeSelect, layoutType }: 
   return <div ref={containerRef} style={{ width: '100%', height: '100%' }} />;
 });
 
+// Add display name
+GraphVisualization.displayName = 'GraphVisualization';
+
 // JSON schema for the clinical trials knowledge graph is defined externally.
 // For this app, we focus on the ontology-based clinical trials data.
 
@@ -362,13 +366,13 @@ const defaultGraphData = {
 };
 
 const LifeSciencesViz1 = () => {
-  const [fullGraphData, setFullGraphData] = useState<any>(defaultGraphData.graph);
+  const [fullGraphData, setFullGraphData] = useState<GraphData>(defaultGraphData.graph);
   const [currentTime, setCurrentTime] = useState<number>(new Date("2025-02-28T00:00:00Z").getTime());
   const [timelineData, setTimelineData] = useState<any[]>([]);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
-  const [selectedNode, setSelectedNode] = useState<any>(null);
+  const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [metadataVisible, setMetadataVisible] = useState<boolean>(false);
@@ -563,7 +567,7 @@ const LifeSciencesViz1 = () => {
         } else {
           setImportError("Imported file does not match the required schema format.");
         }
-      } catch (err) {
+      } catch (error) {
         setImportError("Failed to parse imported file. Please ensure it is valid JSON.");
       }
     };
@@ -612,6 +616,10 @@ const LifeSciencesViz1 = () => {
   };
 
   const dataToDisplay = filteredBySearchTerm(displayedGraphData);
+
+  const handleNodeSelect = (node: GraphNode | null) => {
+    setSelectedNode(node);
+  };
 
   return (
     <div className="flex flex-col h-screen bg-gray-50">
@@ -803,7 +811,7 @@ const LifeSciencesViz1 = () => {
                 {/* Cytoscape visualization */}
                 <GraphVisualization 
                   graphData={dataToDisplay} 
-                  onNodeSelect={setSelectedNode}
+                  onNodeSelect={handleNodeSelect}
                   layoutType={layoutType} // Pass the state value
                 />
                 
