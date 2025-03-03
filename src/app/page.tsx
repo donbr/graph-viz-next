@@ -37,6 +37,11 @@ export default function Home() {
           <h2 className="text-2xl font-semibold">MCP Graph Visualization</h2>
           <p className="mt-2 text-gray-600">D3.js graph visualization</p>
         </Link>
+        <Link href="/force-directed-graph"
+              className="p-6 border rounded-lg shadow-sm hover:shadow-md hover:bg-gray-50 transition-all">
+          <h2 className="text-2xl font-semibold">Force Directed Graph</h2>
+          <p className="mt-2 text-gray-600">D3.js force-directed graph</p>
+        </Link>
       </div>
     </main>
   )
