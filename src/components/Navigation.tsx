@@ -2,14 +2,17 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import path from 'path'
 
 const navItems = [
   { path: '/', label: 'Home' },
+  { path: '/temporal-graph-explorer', label: 'Temporal Graph Explorer' },
   { path: '/cytoscape-graph-viz1', label: 'Cytoscape Graph Viz 1' },
   { path: '/cytoscape-graph-viz2', label: 'Cytoscape Graph Viz 2' },
   { path: '/cytoscape-graph-viz3', label: 'Cytoscape Graph Viz 3' },
   { path: '/life-sciences-graph-viz1', label: 'Life Sciences Graph Viz' },
-  { path: '/temporal-graph-explorer', label: 'Temporal Graph Explorer' },
+  { path: '/mcp-graph-visualization', label: 'MCP Graph Visualization' },
+
 ]
 
 export default function Navigation() {
