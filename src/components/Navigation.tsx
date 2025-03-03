@@ -12,6 +12,7 @@ const navItems = [
   { path: '/cytoscape-graph-viz3', label: 'Cytoscape Graph Viz 3' },
   { path: '/life-sciences-graph-viz1', label: 'Life Sciences Graph Viz' },
   { path: '/mcp-graph-visualization', label: 'MCP Graph Visualization' },
+  { path: '/force-directed-graph', label: 'Force Directed Graph' },
 
 ]
 
