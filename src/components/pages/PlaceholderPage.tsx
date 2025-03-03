@@ -121,9 +121,7 @@ const PlaceholderPage: React.FC = () => {
         </div>
         
         <div className="space-y-6">
-          <p className="text-lg text-gray-200 mb-8">
-            While you're here, why not explore something amazing?
-          </p>
+          <p className="text-lg text-gray-200 mb-8">While you&apos;re here, why not explore something amazing?</p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 

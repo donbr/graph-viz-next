@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 export interface TimelineItem {
   timestamp: number;
-  [key: string]: any;
+  [key: string]: number | string; // Replace any with specific types
 }
 
 interface UseTimelineAnimationProps {

@@ -337,8 +337,6 @@ const CytoscapeGraphViz3 = () => {
   // Convert key events to timeline points
   useEffect(() => {
     if (fullGraphData?.graph?.metadata?.keyEvents) {
-      const events = fullGraphData.graph.metadata.keyEvents;
-      
       // Generate monthly timeline data points
       const startTime = new Date("2023-01-01T00:00:00Z").getTime();
       const endTime = new Date("2023-12-01T00:00:00Z").getTime();
