@@ -69,123 +69,113 @@ const GraphVisualization = React.memo(({ graphData, onNodeSelect, layoutType }: 
       cyRef.current = null;
     }
 
-    // Then create a new instance with a short delay to ensure DOM stability
-    const timer = setTimeout(() => {
-      if (!containerRef.current) return; // Double check container still exists
-
-      // Convert the ontology-based graph data to Cytoscape elements
-      const elements = {
-        nodes: graphData.nodes.map((node: any) => ({
-          data: {
-            id: node.id,
-            // Use the human-friendly name for display
-            label: node.properties["schema:name"] || node.id,
-            // Preserve the original ontology label (e.g., "schema:ClinicalTrial")
-            ontology: node.label,
-            ...node.properties
-          },
-          // Use provided layout if available; if not, let the layout algorithm compute positions.
-          position: node.layout ? { x: node.layout.x, y: node.layout.y } : undefined
-        })),
-        edges: graphData.edges.map((edge: any) => ({
-          data: {
-            id: edge.id,
-            source: edge.source,
-            target: edge.target,
-            // Use the edge type as label for styling
-            label: edge.type,
-            ...edge.properties
-          }
-        }))
-      };
-
-      // Define ontology-specific node styles using the new "ontology" property.
-      const nodeStyles = nodeTypeColors;
-
-      // Define edge styles based on relationship type.
-      const edgeStyles = edgeTypeColors;
-
-      cyRef.current = cytoscape({
-        container: containerRef.current,
-        elements,
-        style: [
-          {
-            selector: 'node',
-            style: {
-              'width': 40,
-              'height': 40,
-              'background-color': '#ddd', // fallback color
-              'border-width': 2,
-              'border-color': '#888',
-              'label': 'data(label)',
-              'color': 'white',
-              'text-halign': 'center',
-              'text-valign': 'center',
-              'font-size': '6px',
-              'font-weight': 'bold',
-              'text-wrap': 'wrap',
-              'text-max-width': '100px'
-            }
-          },
-          {
-            selector: 'edge',
-            style: {
-              'width': 2,
-              'line-color': '#a0aec0',
-              'target-arrow-color': '#a0aec0',
-              'target-arrow-shape': 'triangle',
-              'curve-style': 'bezier',
-              'label': 'data(label)',
-              'font-size': '6px',
-              'text-rotation': 'autorotate',
-              'text-margin-y': -10
-            }
-          },
-          // Apply ontology-specific node styles using the "ontology" property.
-          ...Object.entries(nodeStyles).map(([ontology, style]) => ({
-            selector: `node[ontology = "${ontology}"]`,
-            style: style
-          })),
-          // Apply edge styles based on relationship type.
-          ...Object.entries(edgeStyles).map(([edgeType, style]) => ({
-            selector: `edge[label = "${edgeType}"]`,
-            style: style
-          })),
-          {
-            selector: 'node:selected',
-            style: {
-              'border-width': 4,
-              'border-color': '#fff'
-              // 'box-shadow': '0 0 0 2px #000'
-            }
-          }
-        ],
-        // Use a force-directed (physics-enabled) layout rather than a preset layout.
-        layout: {
-          name: layoutType,
-          // animate: layoutType !== 'preset',
-          // padding: 30,
-          fit: true,
-          randomize: true
+    // Create instance immediately without timeout
+    const elements = {
+      nodes: graphData.nodes.map((node: any) => ({
+        data: {
+          id: node.id,
+          label: node.properties["schema:name"] || node.id,
+          ontology: node.label,
+          ...node.properties
         },
-        userZoomingEnabled: true,
-        userPanningEnabled: true,
-        boxSelectionEnabled: false
-      });
+        // Always provide explicit position to prevent jumping
+        position: node.layout ? { x: node.layout.x, y: node.layout.y } : { x: 0, y: 0 }
+      })),
+      edges: graphData.edges.map((edge: any) => ({
+        data: {
+          id: edge.id,
+          source: edge.source,
+          target: edge.target,
+          // Use the edge type as label for styling
+          label: edge.type,
+          ...edge.properties
+        }
+      }))
+    };
 
-      cyRef.current.on('tap', 'node', event => {
-        const node = event.target;
-        const nodeData = graphData.nodes.find((n: any) => n.id === node.id());
-        if (nodeData && onNodeSelect) onNodeSelect(nodeData);
-      });
+    // Define ontology-specific node styles using the new "ontology" property.
+    const nodeStyles = nodeTypeColors;
 
-      cyRef.current.on('tap', event => {
-        if (event.target === cyRef.current && onNodeSelect) onNodeSelect(null);
-      });
-    }, 50); // Short delay to ensure DOM is ready
+    // Define edge styles based on relationship type.
+    const edgeStyles = edgeTypeColors;
+
+    cyRef.current = cytoscape({
+      container: containerRef.current,
+      elements,
+      style: [
+        {
+          selector: 'node',
+          style: {
+            'width': 40,
+            'height': 40,
+            'background-color': '#ddd', // fallback color
+            'border-width': 2,
+            'border-color': '#888',
+            'label': 'data(label)',
+            'color': 'white',
+            'text-halign': 'center',
+            'text-valign': 'center',
+            'font-size': '6px',
+            'font-weight': 'bold',
+            'text-wrap': 'wrap',
+            'text-max-width': '100px'
+          }
+        },
+        {
+          selector: 'edge',
+          style: {
+            'width': 2,
+            'line-color': '#a0aec0',
+            'target-arrow-color': '#a0aec0',
+            'target-arrow-shape': 'triangle',
+            'curve-style': 'bezier',
+            'label': 'data(label)',
+            'font-size': '6px',
+            'text-rotation': 'autorotate',
+            'text-margin-y': -10
+          }
+        },
+        // Apply ontology-specific node styles using the "ontology" property.
+        ...Object.entries(nodeStyles).map(([ontology, style]) => ({
+          selector: `node[ontology = "${ontology}"]`,
+          style: style
+        })),
+        // Apply edge styles based on relationship type.
+        ...Object.entries(edgeStyles).map(([edgeType, style]) => ({
+          selector: `edge[label = "${edgeType}"]`,
+          style: style
+        })),
+        {
+          selector: 'node:selected',
+          style: {
+            'border-width': 4,
+            'border-color': '#fff'
+            // 'box-shadow': '0 0 0 2px #000'
+          }
+        }
+      ],
+      layout: {
+        name: layoutType,
+        // Remove randomize to prevent position jumping
+        randomize: false,
+        fit: true
+      },
+      userZoomingEnabled: true,
+      userPanningEnabled: true,
+      boxSelectionEnabled: false
+    });
+
+    cyRef.current.on('tap', 'node', event => {
+      const node = event.target;
+      const nodeData = graphData.nodes.find((n: any) => n.id === node.id());
+      if (nodeData && onNodeSelect) onNodeSelect(nodeData);
+    });
+
+    cyRef.current.on('tap', event => {
+      if (event.target === cyRef.current && onNodeSelect) onNodeSelect(null);
+    });
 
     return () => {
-      clearTimeout(timer);
       if (cyRef.current) {
         cyRef.current.destroy();
         cyRef.current = null;

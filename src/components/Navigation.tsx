@@ -6,14 +6,13 @@ import path from 'path'
 
 const navItems = [
   { path: '/', label: 'Home' },
-  { path: '/temporal-graph-explorer', label: 'Temporal Graph Explorer' },
-  { path: '/cytoscape-graph-viz1', label: 'Cytoscape Graph Viz 1' },
-  { path: '/cytoscape-graph-viz2', label: 'Cytoscape Graph Viz 2' },
+  { path: '/force-directed-graph', label: 'Force Directed Graph' },
+  { path: '/mcp-graph-visualization', label: 'MCP Graph Visualization' },
   { path: '/cytoscape-graph-viz3', label: 'Cytoscape Graph Viz 3' },
   { path: '/life-sciences-graph-viz1', label: 'Life Sciences Graph Viz' },
-  { path: '/mcp-graph-visualization', label: 'MCP Graph Visualization' },
-  { path: '/force-directed-graph', label: 'Force Directed Graph' },
-
+  // { path: '/cytoscape-graph-viz2', label: 'Cytoscape Graph Viz 2' },
+  // { path: '/cytoscape-graph-viz1', label: 'Cytoscape Graph Viz 1' },
+  // { path: '/temporal-graph-explorer', label: 'Temporal Graph Explorer' },
 ]
 
 export default function Navigation() {
