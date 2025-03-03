@@ -537,7 +537,7 @@ const MCPKnowledgeGraph = () => {
     <div className="flex flex-col w-full h-full max-w-6xl mx-auto p-4">
       <div className="bg-white rounded-lg shadow-lg p-4 mb-4">
         <h1 className="text-2xl font-bold mb-4 text-center">Model Context Protocol (MCP) Knowledge Graph</h1>
-        <p className="text-center text-gray-600 mb-4">An interactive visualization of the MCP ecosystem and components</p>
+        <p className="text-center text-gray-600 mb-4">An interactive visualization of the MCP ecosystem and components using D3.js</p>
         
         <div className="flex flex-wrap gap-4 mb-4">
           <div className="w-full md:w-64">
