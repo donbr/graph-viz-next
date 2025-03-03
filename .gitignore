@@ -65,3 +65,4 @@ public/fallback-*.js
 
 # Storybook
 storybook-static/
+info.txt
