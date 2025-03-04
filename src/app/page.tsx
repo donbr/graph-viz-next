@@ -27,6 +27,11 @@ export default function Home() {
           <h2 className="text-2xl font-semibold">Life Sciences Graph Viz</h2>
           <p className="mt-2 text-gray-600">Domain-specific visualization</p>
         </Link>
+        <Link href="/gdelt-records-viewer"
+              className="p-6 border rounded-lg shadow-sm hover:shadow-md hover:bg-gray-50 transition-all">
+          <h2 className="text-2xl font-semibold">GDELT Records Viewer</h2>
+          <p className="mt-2 text-gray-600">Interactive record viewer</p>
+        </Link>
         {/* <Link href="/temporal-graph-explorer" 
               className="p-6 border rounded-lg shadow-sm hover:shadow-md hover:bg-gray-50 transition-all">
           <h2 className="text-2xl font-semibold">Temporal Graph Explorer</h2>

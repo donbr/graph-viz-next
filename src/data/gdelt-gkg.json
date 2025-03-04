@@ -1,0 +1,793 @@
+{
+  "20200310000000-644": {
+    "metadata": {
+      "id": "20200310000000-644",
+      "sourceCommonName": "jordantimes.com",
+      "date": "20200310000000",
+      "sourceColl": 1,
+      "documentIdentifier": "http://jordantimes.com/news/region/iran-announces-43-new-coronavirus-deaths-raising-toll-237",
+      "quotations": [
+        "a product of America biological aggression that has first infected China and then spread to Iran and the rest of the world",
+        "United States, the Zionist regime and other countries are all affected"
+      ]
+    },
+    "v1": {
+      "counts": [
+        { "type": "KILL", "count": 43, "object": "new", "location": "Iran" },
+        { "type": "KILL", "count": 237, "location": "Iran" },
+        { "type": "CRISISLEX_T02_INJURED", "count": 237, "location": "Iran" },
+        { "type": "CRISISLEX_T03_DEAD", "count": 237, "location": "Iran" }
+      ],
+      "themes": [
+        "KILL",
+        "TAX_DISEASE",
+        "TAX_DISEASE_CORONAVIRUS",
+        "CRISISLEX_CRISISLEXREC",
+        "CRISISLEX_T02_INJURED",
+        "CRISISLEX_T03_DEAD",
+        "GENERAL_HEALTH",
+        "MEDICAL"
+      ],
+      "locations": [
+        {
+          "type": 4,
+          "name": "Caspian Sea, Oceans (General), Oceans",
+          "countryCode": "OS",
+          "adminCode": "OS00",
+          "coords": {
+            "lat": 42,
+            "lon": 50
+          }
+        },
+        {
+          "type": 5,
+          "name": "Mazandaran, Mazandaran, Iran",
+          "countryCode": "IR",
+          "adminCode": "IR35",
+          "coords": {
+            "lat": 36.25,
+            "lon": 52.3333
+          }
+        },
+        {
+          "type": 1,
+          "name": "America",
+          "countryCode": "US",
+          "adminCode": "US",
+          "coords": {
+            "lat": 39.828175,
+            "lon": -98.5795
+          }
+        },
+        {
+          "type": 1,
+          "name": "Iranian",
+          "countryCode": "IR",
+          "adminCode": "IR",
+          "coords": {
+            "lat": 32,
+            "lon": 53
+          }
+        },
+        {
+          "type": 1,
+          "name": "United States",
+          "countryCode": "US",
+          "adminCode": "US",
+          "coords": {
+            "lat": 39.828175,
+            "lon": -98.5795
+          }
+        },
+        {
+          "type": 1,
+          "name": "Iran",
+          "countryCode": "IR",
+          "adminCode": "IR",
+          "coords": {
+            "lat": 32,
+            "lon": 53
+          }
+        },
+        {
+          "type": 4,
+          "name": "Tehran, Tehran, Iran",
+          "countryCode": "IR",
+          "adminCode": "IR26",
+          "coords": {
+            "lat": 35.75,
+            "lon": 51.5148
+          }
+        },
+        {
+          "type": 1,
+          "name": "China",
+          "countryCode": "CH",
+          "adminCode": "CH",
+          "coords": {
+            "lat": 35,
+            "lon": 105
+          }
+        },
+        {
+          "type": 4,
+          "name": "Etemad, Ardabil, Iran",
+          "countryCode": "IR",
+          "adminCode": "IR32",
+          "coords": {
+            "lat": 39.2676,
+            "lon": 48.0226
+          }
+        }
+      ],
+      "persons": [
+        "Reza Mohammadi Langeroudi",
+        "Kianoush Jahanpour",
+        "Alaeddin Boroudjerdi",
+        "Mohammadreza Rahchamani"
+      ],
+      "organizations": ["United States"],
+      "tone": {
+        "score": -5.46,
+        "positive": 1.75,
+        "negative": 7.21,
+        "polarity": 8.95,
+        "activityRefDensity": 19.43,
+        "selfRefDensity": 0.44,
+        "wordCount": 427
+      }
+    },
+    "v2": {
+      "enhancedThemes": [
+        { "theme": "KILL", "offset": 59 },
+        { "theme": "EDUCATION", "offset": 2083 },
+        { "theme": "TAX_DISEASE_CORONAVIRUS", "offset": 86 }
+      ],
+      "enhancedLocations": [
+        {
+          "name": "Tehran, Tehran, Iran",
+          "type": 4,
+          "countryCode": "IR",
+          "adminCode": "IR26",
+          "offset": 6
+        }
+      ],
+      "enhancedPersons": [
+        { "name": "Reza Mohammadi Langeroudi", "offset": 958 },
+        { "name": "Kianoush Jahanpour", "offset": 278 }
+      ],
+      "enhancedOrganizations": [
+        { "name": "United States", "offset": 2310 },
+        { "name": "United States", "offset": 2629 }
+      ],
+      "gcam": {
+        "wordCount": 427,
+        "1#0#0#2000": 846,
+        "4#3#20#0": 1576
+      }
+    },
+    "v2_1": {
+      "quotations": [
+        {
+          "offset": 2504,
+          "length": 123,
+          "quote": "a product of America biological aggression that has first infected China and then spread to Iran and the rest of the world"
+        },
+        {
+          "offset": 2740,
+          "length": 73,
+          "quote": "United States , the Zionist regime and other countries are all affected"
+        }
+      ],
+      "allNames": [
+        "Kianoush Jahanpour",
+        "Ayatollah Reza Mohammadi Langeroudi",
+        "Ayatollah Khomeini",
+        "Revolutionary Guard"
+      ],
+      "amounts": [
+        { "amount": 43, "object": "new deaths", "offset": 36 },
+        { "amount": 237, "object": "dead", "offset": 112 },
+        { "amount": 595, "object": "new cases across the", "offset": 169 }
+      ]
+    }
+  },
+  "20200310000000-657": {
+    "metadata": {
+      "id": "20200310000000-657",
+      "sourceCommonName": "tnp.sg",
+      "date": "20200310000000",
+      "sourceColl": 1,
+      "documentIdentifier": "https://www.tnp.sg/news/world/inmates-killed-guards-taken-hostage-prison-unrest-across-italy",
+      "quotations": [
+        "state of health is not a cause for concern and does not prevent him from carrying out his functions"
+      ]
+    },
+    "v1": {
+      "counts": [
+        {
+          "type": "KILL",
+          "count": 6,
+          "object": "inmates",
+          "location": "Italy"
+        },
+        {
+          "type": "KIDNAP",
+          "count": 2,
+          "object": "guards",
+          "location": "France"
+        },
+        { "type": "KILL", "count": 366, "location": "Italy" },
+        { "type": "KILL", "count": 19, "location": "France" }
+      ],
+      "themes": [
+        "KILL",
+        "CRISISLEX_T03_DEAD",
+        "SOC_POINTSOFINTEREST",
+        "SOC_POINTSOFINTEREST_PRISON",
+        "WB_2495_DETENTION_PRISON_AND_CORRECTIONS_REFORM",
+        "PROTEST",
+        "KIDNAP",
+        "TAX_DISEASE",
+        "TAX_DISEASE_CORONAVIRUS"
+      ],
+      "locations": [
+        {
+          "type": 2,
+          "name": "New York, United States",
+          "countryCode": "US",
+          "adminCode": "USNY",
+          "coords": { "lat": 42.1497, "lon": -74.9384 }
+        },
+        {
+          "type": 2,
+          "name": "New Jersey, United States",
+          "countryCode": "US",
+          "adminCode": "USNJ",
+          "coords": { "lat": 40.314, "lon": -74.5089 }
+        },
+        { 
+          "type": 1, 
+          "name": "Italy", 
+          "countryCode": "IT",
+          "coords": { "lat": 42.833333, "lon": 12.833333 }
+        },
+        { 
+          "type": 1, 
+          "name": "France", 
+          "countryCode": "FR",
+          "coords": { "lat": 46, "lon": 2 }
+        },
+        {
+          "type": 3,
+          "name": "Washington, Washington, United States",
+          "countryCode": "US",
+          "adminCode": "USDC",
+          "coords": { "lat": 38.8951, "lon": -77.0364 }
+        },
+        {
+          "type": 4,
+          "name": "Romanet, Bourgogne, France",
+          "countryCode": "FR",
+          "adminCode": "FRA1",
+          "coords": { "lat": 47.3613, "lon": 4.13806 }
+        },
+        {
+          "type": 2,
+          "name": "California, United States",
+          "countryCode": "US",
+          "adminCode": "USCA",
+          "coords": { "lat": 36.17, "lon": -119.746 }
+        },
+        {
+          "type": 2,
+          "name": "Pennsylvania, United States",
+          "countryCode": "US",
+          "adminCode": "USPA",
+          "coords": { "lat": 40.5773, "lon": -77.264 }
+        },
+        {
+          "type": 2,
+          "name": "Connecticut, United States",
+          "countryCode": "US",
+          "adminCode": "USCT",
+          "coords": { "lat": 41.5834, "lon": -72.7622 }
+        },
+        {
+          "type": 2,
+          "name": "Illinois, United States",
+          "countryCode": "US",
+          "adminCode": "USIL",
+          "coords": { "lat": 40.3363, "lon": -89.0022 }
+        },
+        {
+          "type": 2,
+          "name": "Oregon, United States",
+          "countryCode": "US",
+          "adminCode": "USOR",
+          "coords": { "lat": 44.5672, "lon": -122.127 }
+        },
+        {
+          "type": 2,
+          "name": "Massachusetts, United States",
+          "countryCode": "US",
+          "adminCode": "USMA",
+          "coords": { "lat": 42.2373, "lon": -71.5314 }
+        }
+      ],
+      "persons": ["Donald Trump", "Francesco Basentini", "A Johns Hopkins"],
+      "organizations": ["Justice Ministry", "Reuters"],
+      "tone": {
+        "score": -8.22,
+        "positive": 0.91,
+        "negative": 9.13,
+        "polarity": 10.05,
+        "activityRefDensity": 20.78,
+        "selfRefDensity": 0.91,
+        "wordCount": 406
+      }
+    },
+    "v2": {
+      "enhancedThemes": [
+        { "theme": "GENERAL_GOVERNMENT", "offset": 233 },
+        { "theme": "TAX_DISEASE_CORONAVIRUS", "offset": 178 },
+        { "theme": "PROTEST", "offset": 45 }
+      ],
+      "enhancedLocations": [
+        { "name": "Italy", "type": 1, "countryCode": "IT", "offset": 54 },
+        { "name": "France", "type": 1, "countryCode": "FR", "offset": 1317 }
+      ],
+      "enhancedPersons": [
+        { "name": "Donald Trump", "offset": 2208 },
+        { "name": "Francesco Basentini", "offset": 671 }
+      ],
+      "enhancedOrganizations": [
+        { "name": "Justice Ministry", "offset": 896 },
+        { "name": "Reuters", "offset": 2562 }
+      ],
+      "gcam": {
+        "wordCount": 406,
+        "4#4#3#0": 610,
+        "4#3#22#0": 1338
+      }
+    },
+    "v2_1": {
+      "quotations": [
+        {
+          "offset": 1795,
+          "length": 99,
+          "quote": "state of health is not a cause for concern and does not prevent him from carrying out his functions"
+        }
+      ],
+      "allNames": [
+        "Francesco Basentini",
+        "Justice Ministry",
+        "Charles De Gaulle",
+        "Donald Trump",
+        "Johns Hopkins"
+      ],
+      "amounts": [
+        { "amount": 6, "object": "inmates were killed", "offset": 8 },
+        { "amount": 366, "object": "people", "offset": 345 },
+        { "amount": 15000000, "object": "people who live", "offset": 439 }
+      ]
+    }
+  },
+  "20200310000000-1013": {
+    "metadata": {
+      "id": "20200310000000-1013",
+      "sourceCommonName": "sott.net",
+      "date": "20200310000000",
+      "sourceColl": 1,
+      "documentIdentifier": "https://www.sott.net/article/430442-A-shock-doctrine-Big-banks-call-for-Wall-Street-to-deregulate-to-fight-coronavirus",
+      "quotations": [
+        "transparently opportunistic",
+        "The whole idea of capital requirements and stress-testing banks is to make sure they have enough cushion to absorb losses"
+      ]
+    },
+    "v1": {
+      "counts": [
+        {
+          "type": "KILL",
+          "count": 461,
+          "object": "recorded",
+          "location": "Bhutan"
+        },
+        { "type": "KILL", "count": 14, "location": "Bhutan" }
+      ],
+      "themes": [
+        "TAX_DISEASE",
+        "TAX_DISEASE_CORONAVIRUS",
+        "EPU_CATS_MIGRATION_FEAR_FEAR",
+        "PRIVATIZATION",
+        "ECON_DEREGULATION",
+        "WB_728_PUBLIC_SERVICE_DELIVERY",
+        "WB_1283_PRIVATIZATION",
+        "EPU_POLICY_FEDERAL_RESERVE",
+        "EPU_CATS_MONETARY_POLICY",
+        "ECON_STOCKMARKET"
+      ],
+      "locations": [
+        {
+          "type": 3,
+          "name": "Miami, Florida, United States",
+          "countryCode": "US",
+          "coords": { "lat": 25.7743, "lon": -80.1937 }
+        },
+        { 
+          "type": 1, 
+          "name": "United States", 
+          "countryCode": "US",
+          "coords": { "lat": 39.828175, "lon": -98.5795 }
+        },
+        { 
+          "type": 1, 
+          "name": "United Kingdom", 
+          "countryCode": "UK",
+          "coords": { "lat": 54, "lon": -4 }
+        },
+        {
+          "type": 3,
+          "name": "Washington, Washington, United States",
+          "countryCode": "US",
+          "coords": { "lat": 38.8951, "lon": -77.0364 }
+        },
+        {
+          "type": 3,
+          "name": "Manhattan, New York, United States",
+          "countryCode": "US",
+          "coords": { "lat": 40.7834, "lon": -73.9662 }
+        },
+        {
+          "type": 1,
+          "name": "Chile",
+          "countryCode": "CI",
+          "coords": { "lat": -30, "lon": -71 }
+        },
+        {
+          "type": 1,
+          "name": "Bhutan",
+          "countryCode": "BT",
+          "coords": { "lat": 27.5, "lon": 90.5 }
+        },
+        {
+          "type": 1,
+          "name": "American",
+          "countryCode": "US",
+          "coords": { "lat": 39.828175, "lon": -98.5795 }
+        },
+        {
+          "type": 1,
+          "name": "British",
+          "countryCode": "UK",
+          "coords": { "lat": 54, "lon": -4 }
+        },
+        {
+          "type": 1,
+          "name": "China",
+          "countryCode": "CH",
+          "coords": { "lat": 35, "lon": 105 }
+        },
+        {
+          "type": 2,
+          "name": "Michigan, United States",
+          "countryCode": "US",
+          "adminCode": "USMI",
+          "coords": { "lat": 43.3504, "lon": -84.5603 }
+        }
+      ],
+      "persons": [
+        "Salvador Allende",
+        "Jeremy Krass",
+        "Rick Santelli",
+        "Naomi Klein",
+        "Augusto Pinochet",
+        "Jeremy Corbyn",
+        "Milton Friedman",
+        "Greg Baer",
+        "Boris Johnson"
+      ],
+      "organizations": [
+        "University of Michigan School of Business",
+        "Economic Policy Research Dean Baker",
+        "Federal Reserve",
+        "Bank Policy Institute",
+        "Dow Jones",
+        "JP Morgan Chase"
+      ],
+      "tone": {
+        "score": -5.64,
+        "positive": 2.45,
+        "negative": 8.1,
+        "polarity": 10.55,
+        "activityRefDensity": 23.44,
+        "selfRefDensity": 0,
+        "wordCount": 769
+      }
+    },
+    "v2": {
+      "enhancedThemes": [
+        { "theme": "ECON_STOCKMARKET", "offset": 2953 },
+        { "theme": "TAX_DISEASE_CORONAVIRUS", "offset": 120 },
+        { "theme": "EPU_POLICY_FEDERAL_RESERVE", "offset": 489 },
+        { "theme": "ECON_DEREGULATION", "offset": 234 }
+      ],
+      "enhancedLocations": [
+        {
+          "name": "Manhattan, New York, United States",
+          "type": 3,
+          "countryCode": "US",
+          "offset": 74
+        },
+        { "name": "Wall Street", "type": 4, "offset": 1320 }
+      ],
+      "enhancedPersons": [
+        { "name": "Milton Friedman", "offset": 2026 },
+        { "name": "Boris Johnson", "offset": 3546 }
+      ],
+      "enhancedOrganizations": [
+        { "name": "Federal Reserve", "offset": 489 },
+        { "name": "Bank Policy Institute", "offset": 276 },
+        { "name": "Dow Jones", "offset": 3071 }
+      ],
+      "gcam": {
+        "wordCount": 769,
+        "1#0#0#1977": 460
+      }
+    },
+    "v2_1": {
+      "quotations": [
+        {
+          "offset": 1013,
+          "length": 27,
+          "quote": "transparently opportunistic"
+        },
+        {
+          "offset": 1203,
+          "length": 121,
+          "quote": "The whole idea of capital requirements and stress-testing banks is to make sure they have enough cushion to absorb losses"
+        }
+      ],
+      "allNames": [
+        "Bank Policy Institute",
+        "Federal Reserve",
+        "Managing Director",
+        "Jeremy Krass",
+        "Michigan School",
+        "Wall Street"
+      ],
+      "amounts": [
+        { "amount": 461, "object": "recorded deaths", "offset": 3162 },
+        { "amount": 259, "object": "people have been infected", "offset": 3424 }
+      ]
+    }
+  },
+  "20200310000000-1078": {
+    "metadata": {
+      "id": "20200310000000-1078",
+      "sourceCommonName": "deadline.com",
+      "date": "20200310000000",
+      "sourceColl": 1,
+      "documentIdentifier": "https://deadline.com/2020/03/coronavirus-stephen-king-the-stand-twitter-1202877934/",
+      "quotations": [
+        "not anywhere near as serious"
+      ]
+    },
+    "v1": {
+      "counts": [{ "type": "KILL", "count": 99, "location": "United States" }],
+      "themes": [
+        "EPU_CATS_MIGRATION_FEAR_FEAR",
+        "TAX_DISEASE",
+        "TAX_DISEASE_CORONAVIRUS",
+        "TAX_DISEASE_FLU",
+        "KILL",
+        "CRISISLEX_T03_DEAD",
+        "TAX_FNCACT_KING",
+        "GENERAL_HEALTH",
+        "MEDICAL",
+        "TAX_DISEASE_INFLUENZA",
+        "WB_1421_INFLUENZA",
+        "WB_1415_COMMUNICABLE_DISEASE",
+        "CRISISLEX_C03_WELLBEING_HEALTH"
+      ],
+      "locations": [
+        { 
+          "type": 1, 
+          "name": "China", 
+          "countryCode": "CH",
+          "coords": { "lat": 35, "lon": 105 }
+        },
+        { 
+          "type": 1, 
+          "name": "United States", 
+          "countryCode": "US",
+          "coords": { "lat": 39.828175, "lon": -98.5795 }
+        },
+        {
+          "type": 1, 
+          "name": "American",
+          "countryCode": "US",
+          "coords": { "lat": 39.828175, "lon": -98.5795 }
+        }
+      ],
+      "persons": ["Stephen King Stephenking", "Stephen King"],
+      "organizations": [
+        "York Stock Exchange",
+        "World Health Organization",
+        "New York Stock Exchange",
+        "Dow Jones"
+      ],
+      "tone": {
+        "score": -6.04,
+        "positive": 1.68,
+        "negative": 7.72,
+        "polarity": 9.4,
+        "activityRefDensity": 21.48,
+        "selfRefDensity": 0.34,
+        "wordCount": 262
+      }
+    },
+    "v2": {
+      "enhancedThemes": [
+        { "theme": "TAX_DISEASE_CORONAVIRUS", "offset": 63 },
+        { "theme": "TAX_DISEASE_FLU", "offset": 100 },
+        { "theme": "ECON_STOCKMARKET", "offset": 1417 }
+      ],
+      "enhancedLocations": [
+        {
+          "name": "United States",
+          "type": 1,
+          "countryCode": "US",
+          "offset": 89
+        },
+        { "name": "China", "type": 1, "countryCode": "CH", "offset": 314 }
+      ],
+      "enhancedPersons": [
+        { "name": "Stephen King", "offset": 209 },
+        { "name": "Stephen King", "offset": 784 }
+      ],
+      "enhancedOrganizations": [
+        { "name": "World Health Organization", "offset": 1203 },
+        { "name": "Dow Jones", "offset": 1571 }
+      ],
+      "gcam": {
+        "wordCount": 262,
+        "1#0#0#1977": 460
+      }
+    },
+    "v2_1": {
+      "quotations": [
+        { "offset": 413, "length": 28, "quote": "not anywhere near as serious" }
+      ],
+      "allNames": [
+        "Stephen King",
+        "Project Blue",
+        "Patient Zero",
+        "World Health Organization",
+        "New York Stock Exchange",
+        "Dow Jones"
+      ],
+      "amounts": [{ "amount": 6, "object": "continents", "offset": 265 }]
+    }
+  },
+  "20200310000000-1266": {
+    "metadata": {
+      "id": "20200310000000-1266",
+      "sourceCommonName": "themorningbulletin.com.au",
+      "date": "20200310000000",
+      "sourceColl": 1,
+      "documentIdentifier": "https://www.themorningbulletin.com.au/news/red-zone-italy-entirely-in-lockdown/3963626/",
+      "quotations": [
+        "Italy is now entirely in lockdown"
+      ]
+    },
+    "v1": {
+      "counts": [
+        { "type": "KILL", "count": 97, "object": "jumped", "location": "Italy" },
+        { "type": "KILL", "count": 463, "location": "Italy" },
+        { "type": "KILL", "count": 20, "location": "France" }
+      ],
+      "themes": [
+        "KILL",
+        "CRISISLEX_T03_DEAD",
+        "TAX_DISEASE_CORONAVIRUS",
+        "QUARANTINE",
+        "LOCKDOWN"
+      ],
+      "locations": [
+        {
+          "type": 4,
+          "name": "Bari, Puglia, Italy",
+          "countryCode": "IT",
+          "adminCode": "IT13",
+          "coords": { "lat": 41.1333, "lon": 16.85 }
+        },
+        {
+          "type": 4,
+          "name": "Milan, Lombardia, Italy",
+          "countryCode": "IT",
+          "adminCode": "IT09",
+          "coords": { "lat": 45.4667, "lon": 9.2 }
+        },
+        {
+          "type": 1,
+          "name": "Italy",
+          "countryCode": "IT",
+          "coords": { "lat": 42.833333, "lon": 12.833333 }
+        },
+        {
+          "type": 1,
+          "name": "France",
+          "countryCode": "FR",
+          "coords": { "lat": 46, "lon": 2 }
+        },
+        {
+          "type": 1,
+          "name": "Iran",
+          "countryCode": "IR",
+          "coords": { "lat": 32, "lon": 53 }
+        },
+        {
+          "type": 1,
+          "name": "China",
+          "countryCode": "CH",
+          "coords": { "lat": 35, "lon": 105 }
+        },
+        {
+          "type": 1, 
+          "name": "Italian",
+          "countryCode": "IT",
+          "coords": { "lat": 42.833333, "lon": 12.833333 }
+        }
+      ],
+      "persons": ["Roberto Burioni", "Giuseppe Conte", "Michele Emiliano"],
+      "organizations": ["Twitter", "Facebook", "World Health Organisation"],
+      "tone": {
+        "score": -8.02,
+        "positive": 1.12,
+        "negative": 9.14,
+        "polarity": 10.26,
+        "activityRefDensity": 22.35,
+        "selfRefDensity": 0.51,
+        "wordCount": 584
+      }
+    },
+    "v2": {
+      "enhancedThemes": [
+        { "theme": "SOC_QUARANTINE", "offset": 1570 },
+        { "theme": "TAX_DISEASE_CORONAVIRUS", "offset": 66 },
+        { "theme": "GENERAL_HEALTH", "offset": 594 }
+      ],
+      "enhancedLocations": [
+        { "name": "Italy", "type": 1, "countryCode": "IT", "offset": 19 },
+        { "name": "Milan, Lombardia, Italy", "type": 4, "countryCode": "IT", "offset": 2021 }
+      ],
+      "enhancedPersons": [
+        { "name": "Giuseppe Conte", "offset": 168 },
+        { "name": "Roberto Burioni", "offset": 2589 }
+      ],
+      "enhancedOrganizations": [
+        { "name": "World Health Organisation", "offset": 2913 },
+        { "name": "Twitter", "offset": 2799 }
+      ],
+      "gcam": {
+        "wordCount": 584,
+        "1#0#0#2001": 460
+      }
+    },
+    "v2_1": {
+      "quotations": [],
+      "allNames": [
+        "Giuseppe Conte",
+        "Giulio Gallera",
+        "Roberto Burioni",
+        "World Health Organisation"
+      ],
+      "amounts": [
+        { "amount": 16000000, "object": "people", "offset": 1647 },
+        { "amount": 20, "object": "fatalities", "offset": 1561 },
+        { "amount": 3, "object": "months", "offset": 1825 }
+      ]
+    }
+  }
+}
