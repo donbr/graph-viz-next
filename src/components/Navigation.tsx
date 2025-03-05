@@ -22,9 +22,16 @@ export default function Navigation() {
   return (
     <nav className="bg-gray-800 text-white px-4 py-3 shadow-md sticky top-0 z-10">
       <div className="container mx-auto flex flex-col md:flex-row md:items-center md:justify-between">
-        <Link href="/" className="font-bold text-xl mb-2 md:mb-0">
-          Graph Visualizations
-        </Link>
+        <div className="flex items-center space-x-2 mb-2 md:mb-0">
+          <Link href="/" className="font-bold text-xl">
+            Graph Visualizations
+          </Link>
+          <span className="text-gray-400">|</span>
+          <a href="https://donbr.github.io/" className="text-blue-300 hover:text-blue-200 transition" target="_blank" rel="noopener noreferrer">
+            <span className="hidden md:inline">Main Portfolio</span>
+            <span className="md:hidden">Portfolio</span>
+          </a>
+        </div>
         <ul className="flex flex-col md:flex-row md:space-x-6">
           {navItems.map(item => (
             <li key={item.path} className="mb-1 md:mb-0">
