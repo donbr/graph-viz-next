@@ -241,9 +241,9 @@ const MapView: React.FC<MapViewProps> = ({ locations }) => {
     delete L.Icon.Default.prototype._getIconUrl;
     
     L.Icon.Default.mergeOptions({
-      iconUrl: '/images/marker-icon.png',
-      iconRetinaUrl: '/images/marker-icon-2x.png', 
-      shadowUrl: '/images/marker-shadow.png'
+      iconUrl: '/marker-icon.png',
+      iconRetinaUrl: '/marker-icon-2x.png', 
+      shadowUrl: '/marker-shadow.png'
     });
   }, []);
 
