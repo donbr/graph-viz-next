@@ -11,6 +11,7 @@ const navItems = [
   { path: '/cytoscape-graph-viz3', label: 'Cytoscape Graph Viz 3' },
   { path: '/life-sciences-graph-viz1', label: 'Life Sciences Graph Viz' },
   { path: '/gdelt-records-viewer', label: 'GDELT Records Viewer' },
+  {path: '/proof-of-truth', label: 'Proof of Truth'},
   // { path: '/cytoscape-graph-viz2', label: 'Cytoscape Graph Viz 2' },
   // { path: '/cytoscape-graph-viz1', label: 'Cytoscape Graph Viz 1' },
   // { path: '/temporal-graph-explorer', label: 'Temporal Graph Explorer' },
