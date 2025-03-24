@@ -37,9 +37,14 @@ export default function Home() {
           <h2 className="text-2xl font-semibold">GDELT Records Viewer</h2>
           <p className="mt-2 text-gray-600">Interactive record viewer</p>
         </Link>
-        <Link href="proof-of-truth"
+        <Link href="/proof-of-truth" 
               className="p-6 border rounded-lg shadow-sm hover:shadow-md hover:bg-gray-50 transition-all">
           <h2 className="text-2xl font-semibold">Proof of Truth</h2>
+          <p className="mt-2 text-gray-600">D3.js graph visualization</p>
+        </Link>
+        <Link href="/airline-ai"
+              className="p-6 border rounded-lg shadow-sm hover:shadow-md hover:bg-gray-50 transition-all">
+          <h2 className="text-2xl font-semibold">Airline AI</h2>
           <p className="mt-2 text-gray-600">D3.js graph visualization</p>
         </Link>
         {/* <Link href="/temporal-graph-explorer" 

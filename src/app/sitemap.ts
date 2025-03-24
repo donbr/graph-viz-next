@@ -11,17 +11,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/cytoscape-graph-viz3',
     '/life-sciences-graph-viz1',
     '/gdelt-records-viewer',
-    '/temporal-graph-explorer',
-    '/cytoscape-graph-viz1',
-    '/cytoscape-graph-viz2',
-    '/cytoscape-graph-explorer'
+    '/proof-of-truth',
+    '/airline-ai'
   ]
   
   // Generate sitemap entries for each route
   return routes.map(route => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: 'monthly',
+    changeFrequency: 'weekly',
     priority: route === '' ? 1.0 : 0.8,
   })) as MetadataRoute.Sitemap
 }
