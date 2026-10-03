@@ -138,6 +138,8 @@ export function demoMetadata(slug: string): Metadata {
     title: demo.name,
     description: demo.description,
     alternates: { canonical: `/${demo.slug}` },
+    // Unlisted prototypes are reachable by URL only: keep them out of search results
+    ...(demo.listed ? {} : { robots: { index: false, follow: true } }),
     openGraph: {
       ...siteOpenGraph,
       title: shareTitle,
