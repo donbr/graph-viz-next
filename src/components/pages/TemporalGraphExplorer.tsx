@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { graphChrome, temporalEdgeColors, temporalNodeColor } from '../../utils/colors';
+import { formatUtcDate } from '../../utils/dates';
 
 // Main App Component
 const TemporalGraphExplorer = () => {
@@ -125,7 +126,7 @@ const TemporalGraphExplorer = () => {
 
   // Format timestamp to readable date
   const formatDate = (timestamp) => {
-    return new Date(timestamp).toLocaleDateString();
+    return formatUtcDate(timestamp);
   };
 
   // Get current timeline data point

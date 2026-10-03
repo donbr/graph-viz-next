@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import cytoscape from 'cytoscape';
 import { baseColors, cytoscapeSelectedStyle, graphChrome, temporalEdgeStyles, temporalNodeColor, temporalNodeStyles } from '../../utils/colors';
+import { formatUtcDate } from '../../utils/dates';
 
 // Graph Visualization Component using Cytoscape.js
 const GraphVisualization = ({ graphData, onNodeSelect }) => {
@@ -248,7 +249,7 @@ const CytoscapeGraphViz = () => {
 
   // Format timestamp to readable date
   const formatDate = (timestamp) => {
-    return new Date(timestamp).toLocaleDateString();
+    return formatUtcDate(timestamp);
   };
 
   // Get current timeline data point
