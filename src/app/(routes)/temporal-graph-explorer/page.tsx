@@ -1,8 +1,13 @@
-'use client'
-
-import React from 'react'
 import TemporalGraphExplorer from '../../../components/pages/TemporalGraphExplorer'
+import DemoShell from '@/components/DemoShell'
+import { demoMetadata } from '@/lib/demos'
+
+export const metadata = demoMetadata('temporal-graph-explorer')
 
 export default function Page() {
-  return <TemporalGraphExplorer />
+  return (
+    <DemoShell slug="temporal-graph-explorer">
+      <TemporalGraphExplorer />
+    </DemoShell>
+  )
 }

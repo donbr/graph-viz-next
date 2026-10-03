@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
+import { graphChrome, temporalEdgeColors, temporalNodeColor } from '../../utils/colors';
 
 // Main App Component
 const TemporalGraphExplorer = () => {
@@ -131,21 +132,20 @@ const TemporalGraphExplorer = () => {
   const currentTimelinePoint = timelineData.find(item => item.timestamp === currentTime) || {};
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="flex flex-col lg:h-[800px] bg-white rounded-lg shadow-md overflow-hidden">
       {/* Header */}
-      <header className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 shadow-md">
-        <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Temporal Graph Explorer</h1>
-          <div className="px-4 py-2 bg-white bg-opacity-20 rounded">
+      <header className="bg-white border-b border-gray-200 px-4 py-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="px-3 py-1.5 bg-gray-100 text-gray-800 text-sm font-medium rounded-full">
             {formatDate(currentTime)}
           </div>
         </div>
       </header>
       
       {/* Main Content */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-col lg:flex-row flex-1 lg:overflow-hidden">
         {/* Left sidebar */}
-        <div className="w-64 bg-white shadow-md p-4 flex flex-col overflow-auto">
+        <div className="w-full lg:w-64 shrink-0 bg-white border-b lg:border-b-0 lg:border-r border-gray-200 p-4 flex flex-col overflow-auto">
           <h2 className="text-lg font-semibold mb-4">Filters</h2>
           
           <div className="mb-4">
@@ -185,7 +185,7 @@ const TemporalGraphExplorer = () => {
         </div>
         
         {/* Main Panel */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 min-w-0 flex flex-col">
           {/* Timeline control */}
           <div className="bg-white border-b p-4 flex items-center space-x-4">
             <button 
@@ -217,7 +217,7 @@ const TemporalGraphExplorer = () => {
           </div>
           
           {/* Graph visualization */}
-          <div className="flex-1 overflow-auto p-6">
+          <div className="flex-none h-[500px] lg:flex-1 lg:h-auto overflow-auto p-6 bg-gray-50">
             {loading ? (
               <div className="flex items-center justify-center h-full">
                 <div className="text-lg">Loading graph data...</div>
@@ -241,11 +241,7 @@ const TemporalGraphExplorer = () => {
                       if (!source || !target) return null;
                       
                       // Set edge colors based on type
-                      const edgeColor = 
-                        edge.type === 'WORKS_AT' ? '#a0aec0' :
-                        edge.type === 'MANAGES' ? '#fc8181' :
-                        edge.type === 'WORKS_ON' ? '#fbd38d' :
-                        edge.type === 'USES' ? '#d6bcfa' : '#a0aec0';
+                      const edgeColor = temporalEdgeColors[edge.type] ?? graphChrome.edge;
                       
                       const midX = (source.x + target.x) / 2;
                       const midY = (source.y + target.y) / 2;
@@ -263,7 +259,7 @@ const TemporalGraphExplorer = () => {
                             x={midX} 
                             y={midY} 
                             textAnchor="middle" 
-                            fill="#4a5568" 
+                            fill={graphChrome.edgeLabel} 
                             fontSize="10"
                             dy="-5"
                           >
@@ -281,7 +277,7 @@ const TemporalGraphExplorer = () => {
                         refY="3.5" 
                         orient="auto"
                       >
-                        <polygon points="0 0, 10 3.5, 0 7" fill="#718096" />
+                        <polygon points="0 0, 10 3.5, 0 7" fill={graphChrome.edge} />
                       </marker>
                     </defs>
                   </svg>
@@ -289,11 +285,7 @@ const TemporalGraphExplorer = () => {
                   {/* Draw nodes */}
                   {graphData && graphData.nodes.map(node => {
                     // Set node colors based on label
-                    const bgColor = 
-                      node.label === 'Person' ? '#4299e1' :
-                      node.label === 'Company' ? '#ed8936' :
-                      node.label === 'Project' ? '#48bb78' :
-                      node.label === 'Technology' ? '#9f7aea' : '#4299e1';
+                    const bgColor = temporalNodeColor(node.label).fill;
                     
                     return (
                       <div 
@@ -344,7 +336,7 @@ const TemporalGraphExplorer = () => {
         </div>
         
         {/* Right Sidebar - Details Panel */}
-        <div className="w-72 bg-white shadow-md p-4 overflow-auto">
+        <div className="w-full lg:w-72 shrink-0 bg-white border-t lg:border-t-0 lg:border-l border-gray-200 p-4 overflow-auto">
           {selectedNode ? (
             // Node details panel
             <div>
@@ -367,16 +359,8 @@ const TemporalGraphExplorer = () => {
                 <div className="text-sm text-gray-500">Label</div>
                 <div className="inline-block px-2 py-1 rounded text-xs font-medium"
                   style={{ 
-                    backgroundColor: 
-                      selectedNode.label === 'Person' ? '#bee3f8' :
-                      selectedNode.label === 'Company' ? '#feebc8' :
-                      selectedNode.label === 'Project' ? '#c6f6d5' :
-                      selectedNode.label === 'Technology' ? '#e9d8fd' : '#bee3f8',
-                    color:
-                      selectedNode.label === 'Person' ? '#2c5282' :
-                      selectedNode.label === 'Company' ? '#7b341e' :
-                      selectedNode.label === 'Project' ? '#276749' :
-                      selectedNode.label === 'Technology' ? '#553c9a' : '#2c5282',
+                    backgroundColor: temporalNodeColor(selectedNode.label).light,
+                    color: temporalNodeColor(selectedNode.label).text,
                   }}
                 >
                   {selectedNode.label}

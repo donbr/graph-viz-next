@@ -1,8 +1,13 @@
-'use client'
-
-import React from 'react'
 import AirlineAIKnowledgeGraph from '../../../components/pages/AirlineAIGraph'
+import DemoShell from '@/components/DemoShell'
+import { demoMetadata } from '@/lib/demos'
+
+export const metadata = demoMetadata('airline-ai')
 
 export default function Page() {
-  return <AirlineAIKnowledgeGraph />
+  return (
+    <DemoShell slug="airline-ai">
+      <AirlineAIKnowledgeGraph />
+    </DemoShell>
+  )
 }

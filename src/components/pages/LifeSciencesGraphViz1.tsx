@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 
 import cytoscape from 'cytoscape';
-import { nodeTypeColors, edgeTypeColors } from '../../utils/colors';
+import { baseColors, cytoscapeSelectedStyle, edgeTypeColors, graphChrome, lifeSciencesNodeColors, nodeTypeColors } from '../../utils/colors';
 
 interface GraphNode {
   id: string;
@@ -108,9 +108,9 @@ const GraphVisualization = React.memo(({ graphData, onNodeSelect, layoutType }: 
           style: {
             'width': 40,
             'height': 40,
-            'background-color': '#ddd', // fallback color
+            'background-color': baseColors.gray.fill, // fallback color
             'border-width': 2,
-            'border-color': '#888',
+            'border-color': baseColors.gray.border,
             'label': 'data(label)',
             'color': 'white',
             'text-halign': 'center',
@@ -125,8 +125,8 @@ const GraphVisualization = React.memo(({ graphData, onNodeSelect, layoutType }: 
           selector: 'edge',
           style: {
             'width': 2,
-            'line-color': '#a0aec0',
-            'target-arrow-color': '#a0aec0',
+            'line-color': graphChrome.edge,
+            'target-arrow-color': graphChrome.edge,
             'target-arrow-shape': 'triangle',
             'curve-style': 'bezier',
             'label': 'data(label)',
@@ -147,11 +147,7 @@ const GraphVisualization = React.memo(({ graphData, onNodeSelect, layoutType }: 
         })),
         {
           selector: 'node:selected',
-          style: {
-            'border-width': 4,
-            'border-color': '#fff'
-            // 'box-shadow': '0 0 0 2px #000'
-          }
+          style: cytoscapeSelectedStyle
         }
       ],
       layout: {
@@ -612,19 +608,18 @@ const LifeSciencesViz1 = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="flex flex-col lg:h-[800px] bg-white rounded-lg shadow-md overflow-hidden">
       {/* Header */}
-      <header className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 shadow-md">
-        <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Clinical Trials Graph Explorer</h1>
-          <div className="flex items-center space-x-4">
-            <div className="px-4 py-2 bg-white bg-opacity-20 rounded">{formatDate(currentTime)}</div>
-            <div className="flex">
-              <button onClick={() => setMetadataVisible(!metadataVisible)} className="bg-white bg-opacity-20 px-3 py-2 rounded-l hover:bg-opacity-30 transition" title="View metadata">Info</button>
-              <button onClick={exportSchema} className="bg-white bg-opacity-20 px-3 py-2 hover:bg-opacity-30 transition" title="Export schema">Schema</button>
-              <button onClick={exportGraphData} className="bg-white bg-opacity-20 px-3 py-2 hover:bg-opacity-30 transition" title="Export graph data">Export</button>
-              <button onClick={() => fileInputRef.current && fileInputRef.current.click()} className="bg-white bg-opacity-20 px-3 py-2 hover:bg-opacity-30 transition" title="Import graph data">Import</button>
-              <button onClick={resetToDefault} className="bg-white bg-opacity-20 px-3 py-2 rounded-r hover:bg-opacity-30 transition" title="Reset to default">Reset</button>
+      <header className="bg-white border-b border-gray-200 px-4 py-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="px-3 py-1.5 bg-gray-100 text-gray-800 text-sm font-medium rounded-full">{formatDate(currentTime)}</div>
+            <div className="flex flex-wrap">
+              <button onClick={() => setMetadataVisible(!metadataVisible)} className="bg-white border border-gray-300 -ml-px first:ml-0 px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 rounded-l-md transition" title="View metadata">Info</button>
+              <button onClick={exportSchema} className="bg-white border border-gray-300 -ml-px first:ml-0 px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 transition" title="Export schema">Schema</button>
+              <button onClick={exportGraphData} className="bg-white border border-gray-300 -ml-px first:ml-0 px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 transition" title="Export graph data">Export</button>
+              <button onClick={() => fileInputRef.current && fileInputRef.current.click()} className="bg-white border border-gray-300 -ml-px first:ml-0 px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 transition" title="Import graph data">Import</button>
+              <button onClick={resetToDefault} className="bg-white border border-gray-300 -ml-px first:ml-0 px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 rounded-r-md transition" title="Reset to default">Reset</button>
               <input type="file" accept="application/json" ref={fileInputRef} onChange={importGraphData} style={{ display: 'none' }} />
             </div>
           </div>
@@ -690,9 +685,9 @@ const LifeSciencesViz1 = () => {
       )}
 
       {/* Main Content */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-col lg:flex-row flex-1 lg:overflow-hidden">
         {/* Left Sidebar - Filters */}
-        <div className="w-64 bg-white shadow-md p-4 flex flex-col overflow-auto">
+        <div className="w-full lg:w-64 shrink-0 bg-white border-b lg:border-b-0 lg:border-r border-gray-200 p-4 flex flex-col overflow-auto">
           <h2 className="text-lg font-semibold mb-4">Filters</h2>
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1">Search</label>
@@ -748,7 +743,7 @@ const LifeSciencesViz1 = () => {
         </div>
 
         {/* Main Panel */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 min-w-0 flex flex-col">
           {/* Timeline Control */}
           {timelineData.length > 0 && (
             <div className="bg-white border-b p-4 flex flex-col space-y-4">
@@ -782,7 +777,7 @@ const LifeSciencesViz1 = () => {
           )}
 
           {/* Graph Visualization */}
-          <div className="flex-1 overflow-auto p-6">
+          <div className="flex-none h-[500px] lg:flex-1 lg:h-auto overflow-auto p-6 bg-gray-50">
             {loading ? (
               <div className="flex items-center justify-center h-full">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
@@ -841,7 +836,7 @@ const LifeSciencesViz1 = () => {
         </div>
 
         {/* Right Sidebar - Node Details */}
-        <div className="w-72 bg-white shadow-md p-4 overflow-auto">
+        <div className="w-full lg:w-72 shrink-0 bg-white border-t lg:border-t-0 lg:border-l border-gray-200 p-4 overflow-auto">
           {selectedNode ? (
             <div>
               <div className="flex justify-between items-center mb-4">
@@ -854,7 +849,10 @@ const LifeSciencesViz1 = () => {
               </div>
               <div className="mb-4">
                 <div className="text-sm text-gray-500">Label</div>
-                <div className="inline-block px-2 py-1 rounded text-xs font-medium" style={{ backgroundColor: '#edf2f7', color: '#2d3748' }}>
+                <div className="inline-block px-2 py-1 rounded text-xs font-medium" style={{
+                  backgroundColor: (lifeSciencesNodeColors[selectedNode.label] ?? baseColors.gray).light,
+                  color: (lifeSciencesNodeColors[selectedNode.label] ?? baseColors.gray).text,
+                }}>
                   {selectedNode.label}
                 </div>
               </div>

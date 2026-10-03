@@ -527,14 +527,8 @@ const GdeltRecordsViewer: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <h1 className="text-2xl font-bold text-gray-800">GDELT GKG Viewer</h1>
-        </div>
-      </header>
-      
-      <div className="max-w-6xl mx-auto px-4 py-8">
+    <div>
+      <div>
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-bold text-gray-800 mb-4">Global Knowledge Graph Analysis</h2>
           <div className="flex flex-col md:flex-row">
@@ -588,11 +582,9 @@ const GdeltRecordsViewer: React.FC = () => {
         </div>
       </div>
       
-      <footer className="bg-white border-t mt-8 py-4">
-        <div className="max-w-6xl mx-auto px-4 text-center text-gray-600 text-sm">
-          GDELT Global Knowledge Graph Viewer - Data from GDELT Project
-        </div>
-      </footer>
+      <p className="mt-4 text-center text-gray-600 text-sm">
+        GDELT Global Knowledge Graph Viewer - Data from GDELT Project
+      </p>
     </div>
   );
 };

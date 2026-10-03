@@ -2,6 +2,17 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
+import { categoricalColors, graphChrome } from '../../utils/colors';
+
+// Entity types for filtering ("All" first) and legend
+const entityTypes = [
+  "All", "System", "Ontology", "Technology", "Protocol",
+  "Challenge", "Process", "Specific Ontology", "Implementation",
+  "Component", "Strategy"
+];
+
+// Node and legend colors, assigned in entityTypes order
+const colorFor = categoricalColors(entityTypes.filter(type => type !== "All"));
 
 const ProofOfTruthGraph = () => {
   const svgRef = useRef(null);
@@ -11,23 +22,12 @@ const ProofOfTruthGraph = () => {
   const [selectedNodeDetails, setSelectedNodeDetails] = useState(null);
   const [selectedNodeConnections, setSelectedNodeConnections] = useState([]);
   
-  // Define entity types for filtering with enabled state tracking
-  const entityTypes = [
-    "All", "System", "Ontology", "Technology", "Protocol", 
-    "Challenge", "Process", "Specific Ontology", "Implementation", 
-    "Component", "Strategy"
-  ];
   
   // Track which entity types are being displayed (all by default)
   const [enabledTypes, setEnabledTypes] = useState(
     entityTypes.filter(type => type !== "All")
   );
   
-  // Define the color scale at the component level so it's accessible in JSX
-  const colorScale = d3.scaleOrdinal()
-    .domain(entityTypes.filter(type => type !== "All"))
-    .range(["#e41a1c", "#377eb8", "#4daf4a", "#984ea3", "#ff7f00", 
-           "#ffff33", "#a65628", "#f781bf", "#999999", "#66c2a5"]);
   
   // Toggle filter for an entity type
   const toggleType = (type) => {
@@ -212,11 +212,6 @@ const ProofOfTruthGraph = () => {
       .style("max-width", "300px")
       .style("z-index", 1000);
 
-    // Color scale for node types
-    const colorScale = d3.scaleOrdinal()
-      .domain(entityTypes.filter(type => type !== "All"))
-      .range(["#e41a1c", "#377eb8", "#4daf4a", "#984ea3", "#ff7f00", 
-               "#ffff33", "#a65628", "#f781bf", "#999999", "#66c2a5"]);
 
     // Create a zoom behavior
     const zoom = d3.zoom()
@@ -249,7 +244,7 @@ const ProofOfTruthGraph = () => {
 
     // Add the links
     const link = container.append("g")
-      .attr("stroke", "#999")
+      .attr("stroke", graphChrome.edge)
       .attr("stroke-opacity", 0.6)
       .selectAll("line")
       .data(filteredLinks)
@@ -268,7 +263,7 @@ const ProofOfTruthGraph = () => {
           .style("top", (event.pageY - 28) + "px");
           
         // Highlight this link
-        d3.select(this).attr("stroke", "#ff0000").attr("stroke-width", 3);
+        d3.select(this).attr("stroke", graphChrome.highlight).attr("stroke-width", 3);
       })
       .on("mouseout", function() {
         // Hide tooltip
@@ -278,7 +273,7 @@ const ProofOfTruthGraph = () => {
           
         // Reset highlight if no node is selected
         if (!selectedNodeDetails) {
-          d3.select(this).attr("stroke", "#999").attr("stroke-width", 1.5);
+          d3.select(this).attr("stroke", graphChrome.edge).attr("stroke-width", 1.5);
         }
       });
 
@@ -291,18 +286,18 @@ const ProofOfTruthGraph = () => {
       .attr("font-size", "8px")
       .attr("text-anchor", "middle")
       .attr("dy", "-5px")
-      .attr("fill", "#666")
+      .attr("fill", graphChrome.edgeLabel)
       .style("pointer-events", "none"); // prevent interfering with mouse events
 
     // Add the nodes
     const node = container.append("g")
-      .attr("stroke", "#fff")
       .attr("stroke-width", 1.5)
       .selectAll("circle")
       .data(filteredNodes)
       .join("circle")
       .attr("r", d => d.radius)
-      .attr("fill", d => colorScale(d.group))
+      .attr("fill", d => colorFor(d.group).fill)
+      .attr("stroke", graphChrome.nodeStroke)
       .style("cursor", "pointer")
       .call(drag(simulation))
       .on("mouseover", function(event, d) {
@@ -429,7 +424,7 @@ const ProofOfTruthGraph = () => {
       .attr("stroke", l => {
         const sourceId = typeof l.source === 'object' ? l.source.id : l.source;
         const targetId = typeof l.target === 'object' ? l.target.id : l.target;
-        return sourceId === d.id || targetId === d.id ? "#ff0000" : "#999";
+        return sourceId === d.id || targetId === d.id ? graphChrome.highlight : graphChrome.edge;
       });
       
       linkText.attr("opacity", l => {
@@ -446,7 +441,7 @@ const ProofOfTruthGraph = () => {
       node.attr("opacity", 1);
       link.attr("stroke-opacity", 0.6)
           .attr("stroke-width", 1.5)
-          .attr("stroke", "#999");
+          .attr("stroke", graphChrome.edge);
       linkText.attr("opacity", 1);
       nodeLabels.attr("opacity", 1);
     }
@@ -491,10 +486,8 @@ const ProofOfTruthGraph = () => {
   }, [enabledTypes, searchText]); // Re-render when filters change
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="bg-white rounded-lg shadow-lg p-4 mb-4">
-        <h1 className="text-2xl font-bold mb-2 text-center">Proof of Truth Framework</h1>
-        <p className="text-gray-600 text-center mb-4">Knowledge Graph Visualization of System Components and Relationships</p>
+    <div>
+      <div className="bg-white rounded-lg shadow-md p-4">
         
         <div className="flex flex-col md:flex-row gap-4">
           {/* Main graph visualization */}
@@ -614,7 +607,7 @@ const ProofOfTruthGraph = () => {
                         />
                         <div 
                           className="w-4 h-4 rounded-full mr-2"
-                          style={{ backgroundColor: colorScale ? colorScale(type) : '#ccc' }}
+                          style={{ backgroundColor: colorFor(type).fill }}
                         ></div>
                         <label htmlFor={`filter-${type}`} className="text-sm">
                           {type}

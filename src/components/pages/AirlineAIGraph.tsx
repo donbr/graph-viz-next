@@ -2,6 +2,10 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
+import { categoricalColors, graphChrome } from '../../utils/colors';
+
+// Node and legend colors, assigned in this order
+const colorFor = categoricalColors(['Technology', 'Implementation', 'Application Area', 'Challenge', 'Emerging Technology', 'Architecture', 'Category', 'Technology Platform']);
 
 const AirlineAIKnowledgeGraph = () => {
   const svgRef = useRef(null);
@@ -153,14 +157,10 @@ const AirlineAIKnowledgeGraph = () => {
       .force("y", d3.forceY(height / 2).strength(0.07)) // Slightly stronger y-positioning
       .force("collision", d3.forceCollide().radius(75)); // Larger collision radius
     
-    // Create color scale for node types
-    const colorScale = d3.scaleOrdinal()
-      .domain(['Technology', 'Implementation', 'Application Area', 'Challenge', 'Emerging Technology', 'Architecture', 'Category', 'Technology Platform'])
-      .range(['#4e79a7', '#f28e2b', '#59a14f', '#e15759', '#76b7b2', '#edc948', '#b07aa1', '#ff9da7']);
     
     // Create links
     const link = g.append("g")
-      .attr("stroke", "#999")
+      .attr("stroke", graphChrome.edge)
       .attr("stroke-opacity", 0.6)
       .selectAll("line")
       .data(graphData.links)
@@ -180,7 +180,7 @@ const AirlineAIKnowledgeGraph = () => {
       .attr("markerHeight", 6)
       .attr("orient", "auto")
       .append("path")
-      .attr("fill", "#999")
+      .attr("fill", graphChrome.edge)
       .attr("d", "M0,-5L10,0L0,5");
     
     // Create node groups
@@ -196,8 +196,8 @@ const AirlineAIKnowledgeGraph = () => {
     // Add circles for nodes
     node.append("circle")
       .attr("r", 20)
-      .attr("fill", d => colorScale(d.type))
-      .attr("stroke", "#fff")
+      .attr("fill", d => colorFor(d.type).fill)
+      .attr("stroke", graphChrome.nodeStroke)
       .attr("stroke-width", 2);
     
     // Add node labels
@@ -207,7 +207,7 @@ const AirlineAIKnowledgeGraph = () => {
       .attr("dy", 30)
       .attr("font-size", "10px")
       .attr("font-weight", "bold")
-      .attr("fill", "#333");
+      .attr("fill", graphChrome.label);
     
     // Link-labels
     const linkLabels = g.append("g")
@@ -255,8 +255,8 @@ const AirlineAIKnowledgeGraph = () => {
     
     // Update link styling based on highlights
     link.attr("stroke", d => {
-      if (highlightedLinks.length === 0) return "#999";
-      return highlightedLinks.includes(d) ? "#ff9900" : "#ddd";
+      if (highlightedLinks.length === 0) return graphChrome.edge;
+      return highlightedLinks.includes(d) ? graphChrome.highlight : graphChrome.dimmed;
     })
     .attr("stroke-width", d => {
       if (highlightedLinks.length === 0) return 2;
@@ -274,8 +274,8 @@ const AirlineAIKnowledgeGraph = () => {
         return highlightedNodes.includes(d.id) ? 25 : 15;
       })
       .attr("stroke", d => {
-        if (highlightedNodes.length === 0) return "#fff";
-        return highlightedNodes.includes(d.id) ? "#ff9900" : "#ddd";
+        if (highlightedNodes.length === 0) return graphChrome.nodeStroke;
+        return highlightedNodes.includes(d.id) ? graphChrome.highlight : graphChrome.dimmed;
       })
       .attr("stroke-width", d => {
         if (highlightedNodes.length === 0) return 2;
@@ -388,14 +388,9 @@ const AirlineAIKnowledgeGraph = () => {
   const nodeTypes = ['All', ...Array.from(new Set(nodes.map(node => node.type)))];
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="bg-blue-900 text-white p-4">
-        <h1 className="text-2xl font-bold">Airline AI Ecosystem (2025)</h1>
-        <div className="text-sm mt-1">Interactive visualization of Generative AI and Agentic Solutions in the airline industry</div>
-      </div>
-      
-      <div className="flex flex-row h-full">
-        <div className="w-1/4 bg-gray-100 p-4 overflow-auto">
+    <div className="flex flex-col bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="flex flex-col lg:flex-row">
+        <div className="w-full lg:w-1/4 bg-gray-50 border-b lg:border-b-0 lg:border-r border-gray-200 p-4 overflow-auto">
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Filter by Type:
@@ -432,9 +427,7 @@ const AirlineAIKnowledgeGraph = () => {
                   <div 
                     className="w-4 h-4 rounded-full mr-2" 
                     style={{ 
-                      backgroundColor: d3.scaleOrdinal()
-                        .domain(['Technology', 'Implementation', 'Application Area', 'Challenge', 'Emerging Technology', 'Architecture', 'Category', 'Technology Platform'])
-                        .range(['#4e79a7', '#f28e2b', '#59a14f', '#e15759', '#76b7b2', '#edc948', '#b07aa1', '#ff9da7'])(type) 
+                      backgroundColor: colorFor(type).fill
                     }}
                   ></div>
                   <span className="text-sm">{type}</span>
@@ -468,7 +461,7 @@ const AirlineAIKnowledgeGraph = () => {
           )}
         </div>
         
-        <div className="w-3/4 p-4 flex-grow relative">
+        <div className="w-full lg:w-3/4 min-w-0 p-4 flex-grow relative">
           <svg 
             ref={svgRef} 
             width="100%" 

@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
+import { categoricalColors, graphChrome } from '../../utils/colors';
 
 const MCPKnowledgeGraph = () => {
   const svgRef = useRef(null);
@@ -10,8 +11,9 @@ const MCPKnowledgeGraph = () => {
   const [entityTypes, setEntityTypes] = useState([]);
   const [relationTypes, setRelationTypes] = useState([]);
   
-  // Define color scale for node types
-  const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+  // Node and legend colors, assigned in the order types first appear in the data.
+  // A ref, because renderGraph runs before the setEntityTypes update lands.
+  const colorForRef = useRef(categoricalColors([]));
   
   useEffect(() => {
     // Load graph data
@@ -314,6 +316,7 @@ const MCPKnowledgeGraph = () => {
         const types = [...new Set(graphData.entities.map(e => e.entityType))];
         const relations = [...new Set(graphData.relations.map(r => r.relationType))];
         
+        colorForRef.current = categoricalColors(types);
         setEntityTypes(types);
         setRelationTypes(relations);
         
@@ -397,7 +400,7 @@ const MCPKnowledgeGraph = () => {
       .attr("markerHeight", 6)
       .attr("orient", "auto")
       .append("path")
-      .attr("fill", "#999")
+      .attr("fill", graphChrome.edge)
       .attr("d", "M0,-5L10,0L0,5");
       
     // Convert string references to object references for D3 force simulation
@@ -426,7 +429,7 @@ const MCPKnowledgeGraph = () => {
       .data(linkData)
       .enter().append("path")
       .attr("class", "link")
-      .attr("stroke", "#999")
+      .attr("stroke", graphChrome.edge)
       .attr("stroke-opacity", 0.6)
       .attr("stroke-width", 1.5)
       .attr("fill", "none")
@@ -439,7 +442,7 @@ const MCPKnowledgeGraph = () => {
       .data(linkData)
       .enter().append("text")
       .attr("class", "link-label")
-      .attr("fill", "#666")
+      .attr("fill", graphChrome.edgeLabel)
       .attr("font-size", "10px")
       .attr("text-anchor", "middle")
       .text(d => d.type);
@@ -464,8 +467,8 @@ const MCPKnowledgeGraph = () => {
         if (d.type === "Software" || d.type === "Software_Library") return 11;
         return 10;
       })
-      .attr("fill", d => colorScale(d.type))
-      .attr("stroke", "#fff")
+      .attr("fill", d => colorForRef.current(d.type).fill)
+      .attr("stroke", graphChrome.nodeStroke)
       .attr("stroke-width", 1.5)
       .on("click", (event, d) => {
         setSelectedNode(d);
@@ -476,14 +479,14 @@ const MCPKnowledgeGraph = () => {
     node.append("text")
       .attr("dy", -15)
       .attr("text-anchor", "middle")
-      .attr("fill", "#333")
+      .attr("fill", graphChrome.label)
       .text(d => d.id.replace(/_/g, ' '));
       
     // Add node type labels
     node.append("text")
       .attr("dy", 20)
       .attr("text-anchor", "middle")
-      .attr("fill", "#666")
+      .attr("fill", graphChrome.edgeLabel)
       .attr("font-size", "8px")
       .text(d => d.type.replace(/_/g, ' '));
     
@@ -534,11 +537,8 @@ const MCPKnowledgeGraph = () => {
   };
   
   return (
-    <div className="flex flex-col w-full h-full max-w-6xl mx-auto p-4">
-      <div className="bg-white rounded-lg shadow-lg p-4 mb-4">
-        <h1 className="text-2xl font-bold mb-4 text-center">Model Context Protocol (MCP) Knowledge Graph</h1>
-        <p className="text-center text-gray-600 mb-4">An interactive visualization of the MCP ecosystem and components using D3.js</p>
-        
+    <div className="flex flex-col w-full">
+      <div className="bg-white rounded-lg shadow-md p-4 mb-4">
         <div className="flex flex-wrap gap-4 mb-4">
           <div className="w-full md:w-64">
             <label className="block text-sm font-medium text-gray-700 mb-1">Search Entities</label>
@@ -547,7 +547,7 @@ const MCPKnowledgeGraph = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search by name..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
           
@@ -556,7 +556,7 @@ const MCPKnowledgeGraph = () => {
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="All">All Types</option>
               {entityTypes.map(type => (
@@ -572,11 +572,11 @@ const MCPKnowledgeGraph = () => {
       </div>
       
       <div className="flex flex-col md:flex-row gap-4">
-        <div className="bg-white rounded-lg shadow-lg p-4 w-full md:w-2/3 h-[600px]">
+        <div className="bg-white rounded-lg shadow-md p-4 w-full md:w-2/3 h-[600px]">
           <svg ref={svgRef} width="100%" height="100%" className="border border-gray-200 rounded"></svg>
         </div>
         
-        <div className="bg-white rounded-lg shadow-lg p-4 w-full md:w-1/3">
+        <div className="bg-white rounded-lg shadow-md p-4 w-full md:w-1/3">
           <h2 className="text-xl font-bold mb-4">Entity Details</h2>
           {selectedNode ? (
             <div>
@@ -601,7 +601,7 @@ const MCPKnowledgeGraph = () => {
                 <div key={type} className="flex items-center">
                   <div 
                     className="w-4 h-4 rounded-full mr-2" 
-                    style={{ backgroundColor: colorScale(type) }}
+                    style={{ backgroundColor: colorForRef.current(type).fill }}
                   ></div>
                   <span>{type.replace(/_/g, ' ')}</span>
                 </div>
