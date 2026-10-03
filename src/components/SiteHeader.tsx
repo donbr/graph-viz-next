@@ -112,7 +112,8 @@ export default function SiteHeader() {
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2 py-4 text-lg font-semibold">
-            <a href={PORTFOLIO_URL} className="text-gray-700 hover:text-gray-900">
+            {/* Closes the menu so a back-forward-cache restore of this page doesn't show it open */}
+            <a href={PORTFOLIO_URL} className="text-gray-700 hover:text-gray-900" onClick={closeMenu}>
               Don Branson
             </a>
             <span aria-hidden="true" className="text-gray-300">/</span>
