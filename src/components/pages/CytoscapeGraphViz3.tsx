@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import cytoscape from 'cytoscape';
 import { baseColors, cytoscapeSelectedStyle, graphChrome, temporalEdgeStyles, temporalNodeColor, temporalNodeStyles } from '../../utils/colors';
+import { formatUtcDate, formatUtcMonth } from '../../utils/dates';
 
 // Graph Visualization Component using Cytoscape.js
 const GraphVisualization = ({ graphData, onNodeSelect }) => {
@@ -310,7 +311,7 @@ const CytoscapeGraphViz3 = () => {
       
       while (currentTime <= endTime) {
         const date = new Date(currentTime);
-        const monthName = date.toLocaleString('default', { month: 'short', year: 'numeric' });
+        const monthName = formatUtcMonth(date);
         
         // Calculate counts for this month (simplified simulation)
         const nodeCount = 45 + Math.floor(month * 4.5);
@@ -327,7 +328,7 @@ const CytoscapeGraphViz3 = () => {
         
         // Move to next month
         month++;
-        date.setMonth(date.getMonth() + 1);
+        date.setUTCMonth(date.getUTCMonth() + 1);
         currentTime = date.getTime();
       }
       
@@ -387,7 +388,7 @@ const CytoscapeGraphViz3 = () => {
 
   // Format timestamp to readable date
   const formatDate = (timestamp) => {
-    return new Date(timestamp).toLocaleDateString();
+    return formatUtcDate(timestamp);
   };
 
   // Get current timeline data point
@@ -405,8 +406,8 @@ const CytoscapeGraphViz3 = () => {
     // Check if current time is within the month of this event
     const eventDate = new Date(event.timestamp);
     const currentDate = new Date(currentTime);
-    return eventDate.getMonth() === currentDate.getMonth() && 
-           eventDate.getFullYear() === currentDate.getFullYear();
+    return eventDate.getUTCMonth() === currentDate.getUTCMonth() && 
+           eventDate.getUTCFullYear() === currentDate.getUTCFullYear();
   });
 
   // Export schema definition
@@ -590,7 +591,7 @@ const CytoscapeGraphViz3 = () => {
               </div>
               <div>
                 <span className="text-sm font-medium text-gray-500">Last Updated</span>
-                <p className="text-sm">{new Date(fullGraphData.graph.metadata.lastUpdated).toLocaleDateString()}</p>
+                <p className="text-sm">{formatUtcDate(fullGraphData.graph.metadata.lastUpdated)}</p>
               </div>
               <div>
                 <span className="text-sm font-medium text-gray-500">Author</span>
@@ -799,12 +800,12 @@ const CytoscapeGraphViz3 = () => {
                   <div className="text-sm text-gray-500">Temporal Data</div>
                   <div className="flex py-1 border-b border-gray-100">
                     <div className="font-medium text-sm w-1/3">Valid From:</div>
-                    <div className="text-sm">{new Date(selectedNode.temporal.validFrom).toLocaleDateString()}</div>
+                    <div className="text-sm">{formatUtcDate(selectedNode.temporal.validFrom)}</div>
                   </div>
                   {selectedNode.temporal.validTo && (
                     <div className="flex py-1 border-b border-gray-100">
                       <div className="font-medium text-sm w-1/3">Valid To:</div>
-                      <div className="text-sm">{new Date(selectedNode.temporal.validTo).toLocaleDateString()}</div>
+                      <div className="text-sm">{formatUtcDate(selectedNode.temporal.validTo)}</div>
                     </div>
                   )}
                 </div>

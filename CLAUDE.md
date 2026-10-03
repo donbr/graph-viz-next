@@ -41,6 +41,7 @@ There is no test suite. Verify changes by running `npm run build` and loading th
   - `graphChrome` for edges, labels, selection, highlight and dimming. Selection and highlight are near-black (no palette fill shares it). D3 nodes have a white idle outline, and Cytoscape `node:selected` uses `cytoscapeSelectedStyle` (white border plus a dark underlay ring).
 
   Don't hardcode hex colors or D3 color schemes in a demo; add a map or entry here. The legend `bg-*-500` classes in the demos rely on the same Tailwind values.
+- `src/utils/dates.ts`: `formatUtcDate` and `formatUtcMonth`. Format every date shown in a demo with these, and do month arithmetic with the `getUTC*`/`setUTC*` methods. Pages are prerendered on the build machine (UTC on Vercel), so `toLocaleDateString()` or local-time math produces text that differs from the visitor's browser and triggers React hydration error #418.
 - `src/lib/utils.ts`: the `cn()` helper, combining clsx and tailwind-merge.
 - `src/hooks/useTimelineAnimation.ts`: currently unused.
 

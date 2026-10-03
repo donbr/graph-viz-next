@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 
 import cytoscape from 'cytoscape';
 import { baseColors, cytoscapeSelectedStyle, edgeTypeColors, graphChrome, lifeSciencesNodeColors, nodeTypeColors } from '../../utils/colors';
+import { formatUtcDate } from '../../utils/dates';
 
 interface GraphNode {
   id: string;
@@ -373,7 +374,7 @@ const LifeSciencesViz1 = () => {
     for (let time = start; time <= end; time += 1000 * 60 * 60 * 24 * 30) {
       points.push({
         timestamp: time,
-        date: new Date(time).toLocaleDateString(),
+        date: formatUtcDate(time),
         nodeCount: Math.floor(Math.random() * 10) + 5,
         edgeCount: Math.floor(Math.random() * 10) + 5,
         changes: Math.floor(Math.random() * 5)
@@ -568,7 +569,7 @@ const LifeSciencesViz1 = () => {
     setImportError(null);
   };
 
-  const formatDate = (timestamp: number) => new Date(timestamp).toLocaleDateString();
+  const formatDate = (timestamp: number) => formatUtcDate(timestamp);
 
   const currentTimelinePoint = timelineData.find(item => item.timestamp === currentTime) || {};
   const keyEvents = fullGraphData.metadata && fullGraphData.metadata.graphType === "directed" ? [
@@ -578,8 +579,8 @@ const LifeSciencesViz1 = () => {
   const currentEvent = keyEvents.find(event => {
     const eventDate = new Date(event.timestamp);
     const currentDate = new Date(currentTime);
-    return eventDate.getMonth() === currentDate.getMonth() &&
-           eventDate.getFullYear() === currentDate.getFullYear();
+    return eventDate.getUTCMonth() === currentDate.getUTCMonth() &&
+           eventDate.getUTCFullYear() === currentDate.getUTCFullYear();
   });
 
   const filteredBySearchTerm = (data: { nodes: GraphNode[]; edges: GraphEdge[] }) => {
@@ -673,7 +674,7 @@ const LifeSciencesViz1 = () => {
               </div>
               <div>
                 <span className="text-sm font-medium text-gray-500">Last Updated</span>
-                <p className="text-sm">{new Date(fullGraphData.metadata.lastUpdated).toLocaleDateString()}</p>
+                <p className="text-sm">{formatUtcDate(fullGraphData.metadata.lastUpdated)}</p>
               </div>
               <div>
                 <span className="text-sm font-medium text-gray-500">Author</span>
@@ -861,12 +862,12 @@ const LifeSciencesViz1 = () => {
                   <div className="text-sm text-gray-500">Temporal Data</div>
                   <div className="flex py-1 border-b border-gray-100">
                     <div className="font-medium text-sm w-1/3">Valid From:</div>
-                    <div className="text-sm">{new Date(selectedNode.temporal.validFrom).toLocaleDateString()}</div>
+                    <div className="text-sm">{formatUtcDate(selectedNode.temporal.validFrom)}</div>
                   </div>
                   {selectedNode.temporal.validTo && (
                     <div className="flex py-1 border-b border-gray-100">
                       <div className="font-medium text-sm w-1/3">Valid To:</div>
-                      <div className="text-sm">{new Date(selectedNode.temporal.validTo).toLocaleDateString()}</div>
+                      <div className="text-sm">{formatUtcDate(selectedNode.temporal.validTo)}</div>
                     </div>
                   )}
                 </div>
