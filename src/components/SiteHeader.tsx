@@ -38,30 +38,39 @@ const navStyles = {
 export default function SiteHeader() {
   const pathname = usePathname()
   const menuButtonRef = useRef<HTMLButtonElement>(null)
+  const menuRef = useRef<HTMLDivElement>(null)
 
-  // The menu stays open only for the path it was opened on, so navigating closes it
-  const [menuOpenAt, setMenuOpenAt] = useState<string | null>(null)
-  const menuOpen = menuOpenAt === pathname
-  const closeMenu = () => setMenuOpenAt(null)
+  // Any navigation closes the menu. A pathname change resets it during render (not in an
+  // effect), so returning to a page via Back/Forward never reopens it; same-path history
+  // moves (hash changes) are caught by the popstate/hashchange listeners below.
+  const [menu, setMenu] = useState({ open: false, pathname })
+  if (menu.pathname !== pathname) setMenu({ open: false, pathname })
+  const menuOpen = menu.open && menu.pathname === pathname
+  const closeMenu = () => setMenu((m) => ({ ...m, open: false }))
 
   useEffect(() => {
     if (!menuOpen) return
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setMenuOpenAt(null)
-        menuButtonRef.current?.focus()
+        // Return focus to the toggle only if it was inside the menu
+        if (menuRef.current?.contains(document.activeElement)) menuButtonRef.current?.focus()
+        closeMenu()
       }
     }
     // Close when the viewport reaches lg, where the menu is hidden
     const desktop = window.matchMedia('(min-width: 1024px)')
     const handleChange = (e: MediaQueryListEvent) => {
-      if (e.matches) setMenuOpenAt(null)
+      if (e.matches) closeMenu()
     }
     document.addEventListener('keydown', handleKeyDown)
     desktop.addEventListener('change', handleChange)
+    window.addEventListener('popstate', closeMenu)
+    window.addEventListener('hashchange', closeMenu)
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
       desktop.removeEventListener('change', handleChange)
+      window.removeEventListener('popstate', closeMenu)
+      window.removeEventListener('hashchange', closeMenu)
     }
   }, [menuOpen])
 
@@ -123,14 +132,14 @@ export default function SiteHeader() {
             aria-controls="mobile-menu"
             aria-expanded={menuOpen}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            onClick={() => setMenuOpenAt(menuOpen ? null : pathname)}
+            onClick={() => setMenu({ open: !menuOpen, pathname })}
           >
             {menuOpen ? <X className="w-6 h-6" aria-hidden="true" /> : <Menu className="w-6 h-6" aria-hidden="true" />}
           </button>
         </div>
 
         {/* Always rendered (hidden when closed) so the button's aria-controls target exists */}
-        <div id="mobile-menu" hidden={!menuOpen} className="lg:hidden border-t border-gray-200 py-2">
+        <div id="mobile-menu" ref={menuRef} hidden={!menuOpen} className="lg:hidden border-t border-gray-200 py-2">
           {navItems.map((item) => renderNavLink(item, 'mobile'))}
         </div>
       </div>
