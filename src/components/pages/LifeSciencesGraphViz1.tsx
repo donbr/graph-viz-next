@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 
 import cytoscape from 'cytoscape';
-import { baseColors, edgeTypeColors, graphChrome, lifeSciencesNodeColors, nodeTypeColors } from '../../utils/colors';
+import { baseColors, cytoscapeSelectedStyle, edgeTypeColors, graphChrome, lifeSciencesNodeColors, nodeTypeColors } from '../../utils/colors';
 
 interface GraphNode {
   id: string;
@@ -147,10 +147,7 @@ const GraphVisualization = React.memo(({ graphData, onNodeSelect, layoutType }: 
         })),
         {
           selector: 'node:selected',
-          style: {
-            'border-width': 4,
-            'border-color': graphChrome.selected
-          }
+          style: cytoscapeSelectedStyle
         }
       ],
       layout: {

@@ -30,12 +30,27 @@ export const baseColors = {
   indigo: typeColor(colors.indigo),
   lime: typeColor(colors.lime),
   cyan: typeColor(colors.cyan),
-  slate: typeColor(colors.slate),
+  // Dark amber reads as brown, a hue the rest of the palette lacks
+  brown: { fill: colors.amber[800], border: colors.amber[950], light: colors.amber[100], text: colors.amber[900] },
   gray: typeColor(colors.gray),
 };
 
+// Light variant of a hue: same family, told apart from the 500 fill by lightness
+const lightVariant = (hue: Record<string, string>): TypeColor => ({
+  fill: hue['300'],
+  border: hue['500'],
+  light: hue['100'],
+  text: hue['800'],
+});
+
+const paletteHues = [
+  colors.blue, colors.orange, colors.green, colors.purple, colors.red, colors.teal,
+  colors.amber, colors.pink, colors.indigo, colors.lime, colors.cyan,
+];
+
 // Order matters: early entries are the most distinct, so demos with few types stay
-// readable. Gray is kept out and used for unknown types.
+// readable. After the 12 mid-tone hues come their light variants, so types 13-23
+// differ from types 1-11 by lightness. Gray is kept out and used for unknown types.
 export const categoricalPalette: TypeColor[] = [
   baseColors.blue,
   baseColors.orange,
@@ -48,7 +63,8 @@ export const categoricalPalette: TypeColor[] = [
   baseColors.indigo,
   baseColors.lime,
   baseColors.cyan,
-  baseColors.slate,
+  baseColors.brown,
+  ...paletteHues.map(lightVariant),
 ];
 
 // Assigns palette entries to types in the order given, so a demo's legend order fixes
@@ -58,19 +74,31 @@ export function categoricalColors(types: readonly string[]): (type: string) => T
   return (type) => lookup.get(type) ?? baseColors.gray;
 }
 
-// Non-categorical colors for edges, labels and interaction states
+// Non-categorical colors for edges, labels and interaction states. Selection and
+// highlight use near-black, which no palette fill shares, so they stand out on every type.
 export const graphChrome = {
   edge: colors.gray[400],
   edgeLabel: colors.gray[500],
   label: colors.gray[700],
-  selected: colors.gray[800], // selected node outline
-  highlight: colors.blue[600], // hovered or connected elements
+  nodeStroke: colors.white, // idle outline on D3 nodes, so selection can contrast with it
+  selected: colors.gray[900], // selected node outline
+  highlight: colors.gray[900], // hovered or connected elements
   dimmed: colors.gray[200], // elements outside the current highlight
 };
 
 // Cytoscape style objects for typed nodes and edges
 export const nodeStyle = (c: TypeColor) => ({ 'background-color': c.fill, 'border-color': c.border });
 export const edgeStyle = (color: string) => ({ 'line-color': color, 'target-arrow-color': color });
+
+// Cytoscape node:selected: white border inside a near-black ring, visible on any fill
+export const cytoscapeSelectedStyle = {
+  'border-width': 3,
+  'border-color': colors.white,
+  'underlay-color': graphChrome.selected,
+  'underlay-padding': 4,
+  'underlay-opacity': 1,
+  'underlay-shape': 'ellipse',
+} as const;
 
 // Clinical Trials Network (schema.org types)
 export const lifeSciencesNodeColors: Record<string, TypeColor> = {
@@ -105,12 +133,16 @@ export const temporalEdgeColors: Record<string, string> = {
   USES: colors.purple[300],
 };
 
-export const temporalNodeColor = (label: string): TypeColor => temporalNodeColors[label] ?? baseColors.blue;
+// Unknown labels (e.g. from an imported graph) get gray, as in categoricalColors
+export const temporalNodeColor = (label: string): TypeColor => temporalNodeColors[label] ?? baseColors.gray;
 
-// Cytoscape-ready maps kept under their original names for LifeSciencesGraphViz1
-export const nodeTypeColors = Object.fromEntries(
-  Object.entries(lifeSciencesNodeColors).map(([type, c]) => [type, nodeStyle(c)])
-);
-export const edgeTypeColors = Object.fromEntries(
-  Object.entries(lifeSciencesEdgeColors).map(([type, color]) => [type, edgeStyle(color)])
-);
+// Cytoscape-ready style maps, keyed by node label / edge type
+const toNodeStyles = (map: Record<string, TypeColor>) =>
+  Object.fromEntries(Object.entries(map).map(([type, c]) => [type, nodeStyle(c)]));
+const toEdgeStyles = (map: Record<string, string>) =>
+  Object.fromEntries(Object.entries(map).map(([type, color]) => [type, edgeStyle(color)]));
+
+export const nodeTypeColors = toNodeStyles(lifeSciencesNodeColors);
+export const edgeTypeColors = toEdgeStyles(lifeSciencesEdgeColors);
+export const temporalNodeStyles = toNodeStyles(temporalNodeColors);
+export const temporalEdgeStyles = toEdgeStyles(temporalEdgeColors);

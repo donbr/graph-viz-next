@@ -4,6 +4,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { categoricalColors, graphChrome } from '../../utils/colors';
 
+// Entity types for filtering ("All" first) and legend
+const entityTypes = [
+  "All", "System", "Ontology", "Technology", "Protocol",
+  "Challenge", "Process", "Specific Ontology", "Implementation",
+  "Component", "Strategy"
+];
+
+// Node and legend colors, assigned in entityTypes order
+const colorFor = categoricalColors(entityTypes.filter(type => type !== "All"));
+
 const ProofOfTruthGraph = () => {
   const svgRef = useRef(null);
   const [selectedNode, setSelectedNode] = useState(null);
@@ -12,20 +22,12 @@ const ProofOfTruthGraph = () => {
   const [selectedNodeDetails, setSelectedNodeDetails] = useState(null);
   const [selectedNodeConnections, setSelectedNodeConnections] = useState([]);
   
-  // Define entity types for filtering with enabled state tracking
-  const entityTypes = [
-    "All", "System", "Ontology", "Technology", "Protocol", 
-    "Challenge", "Process", "Specific Ontology", "Implementation", 
-    "Component", "Strategy"
-  ];
   
   // Track which entity types are being displayed (all by default)
   const [enabledTypes, setEnabledTypes] = useState(
     entityTypes.filter(type => type !== "All")
   );
   
-  // Node and legend colors, assigned in entityTypes order
-  const colorFor = categoricalColors(entityTypes.filter(type => type !== "All"));
   
   // Toggle filter for an entity type
   const toggleType = (type) => {
@@ -295,7 +297,7 @@ const ProofOfTruthGraph = () => {
       .join("circle")
       .attr("r", d => d.radius)
       .attr("fill", d => colorFor(d.group).fill)
-      .attr("stroke", d => colorFor(d.group).border)
+      .attr("stroke", graphChrome.nodeStroke)
       .style("cursor", "pointer")
       .call(drag(simulation))
       .on("mouseover", function(event, d) {

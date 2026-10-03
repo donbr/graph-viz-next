@@ -4,19 +4,20 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { categoricalColors, graphChrome } from '../../utils/colors';
 
+// All entity types, for filtering and legend
+const allEntityTypes = [
+  "Core_Concept", "Architecture", "Mechanism", "Technology",
+  "Stakeholder", "Validation_Component", "Principle",
+  "Goal", "Feature", "Process", "Output", "Incentive_System"
+];
+
+// Node and legend colors, assigned in allEntityTypes order
+const colorFor = categoricalColors(allEntityTypes);
+
 const ForceDirectedGraph = () => {
   const svgRef = useRef<SVGSVGElement>(null);
   const [selectedNode, setSelectedNode] = useState<any>(null);
 
-  // Define all entity types for filtering and legend
-  const allEntityTypes = [
-    "Core_Concept", "Architecture", "Mechanism", "Technology", 
-    "Stakeholder", "Validation_Component", "Principle", 
-    "Goal", "Feature", "Process", "Output", "Incentive_System"
-  ];
-
-  // Node and legend colors, assigned in allEntityTypes order
-  const colorFor = categoricalColors(allEntityTypes);
 
   const [enabledTypes, setEnabledTypes] = useState<string[]>(allEntityTypes);
 
@@ -231,7 +232,7 @@ const ForceDirectedGraph = () => {
   useEffect(() => {
     d3.select(svgRef.current)
       .selectAll(".node circle")
-      .attr("stroke", d => (selectedNode && selectedNode.name === d.name ? graphChrome.selected : colorFor(d.entityType).border))
+      .attr("stroke", d => (selectedNode && selectedNode.name === d.name ? graphChrome.selected : graphChrome.nodeStroke))
       .attr("stroke-width", d => (selectedNode && selectedNode.name === d.name ? 3 : 1.5));
   }, [selectedNode]);
 
@@ -331,7 +332,7 @@ const ForceDirectedGraph = () => {
     node.append("circle")
       .attr("r", d => (d.name === "Decentralized_Content_Framework" ? nodeRadius * 1.5 : nodeRadius))
       .attr("fill", d => colorFor(d.entityType).fill)
-      .attr("stroke", d => colorFor(d.entityType).border)
+      .attr("stroke", graphChrome.nodeStroke)
       .attr("stroke-width", 1.5)
       .on("click", (event, d) => {
         event.stopPropagation();

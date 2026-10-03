@@ -1,20 +1,28 @@
 import { ImageResponse } from 'next/og'
+import colors from 'tailwindcss/colors'
 import { listedDemos } from '@/lib/demos'
+import { siteImage } from '@/lib/site'
+import { baseColors, graphChrome } from '@/utils/colors'
 
 // Social preview for every route (Next.js adds the og:image tags from this file).
-// Generated at build time; colors follow the site's gray-800 / blue-700 / gray-50 tokens.
-export const alt = 'Graph Visualizations: knowledge graph and network demos by Don Branson'
-export const size = { width: 1200, height: 630 }
+// Generated at build time. Colors come from src/utils/colors.ts and Tailwind's palette,
+// so the preview stays in step with the site.
+export const alt = siteImage.alt
+export const size = { width: siteImage.width, height: siteImage.height }
 export const contentType = 'image/png'
 
-// Node fills and borders from src/utils/colors.ts (Tailwind 500 / 700 pairs)
 const nodes = [
-  { x: 210, y: 70, r: 26, fill: '#3b82f6', stroke: '#1d4ed8' },
-  { x: 90, y: 190, r: 22, fill: '#a855f7', stroke: '#7e22ce' },
-  { x: 320, y: 180, r: 30, fill: '#22c55e', stroke: '#15803d' },
-  { x: 180, y: 300, r: 24, fill: '#f97316', stroke: '#c2410c' },
-  { x: 330, y: 360, r: 20, fill: '#6b7280', stroke: '#374151' },
-  { x: 60, y: 360, r: 18, fill: '#fdba74', stroke: '#f97316' },
+  { x: 210, y: 70, r: 26, color: baseColors.blue },
+  { x: 90, y: 190, r: 22, color: baseColors.purple },
+  { x: 320, y: 180, r: 30, color: baseColors.green },
+  { x: 180, y: 300, r: 24, color: baseColors.orange },
+  { x: 330, y: 360, r: 20, color: baseColors.gray },
+  { x: 60, y: 360, r: 18, color: baseColors.amber },
+]
+const tags = [
+  { label: 'D3.js', color: baseColors.blue },
+  { label: 'Cytoscape.js', color: baseColors.blue },
+  { label: 'Leaflet', color: baseColors.purple },
 ]
 const edges: [number, number][] = [[0, 1], [0, 2], [1, 3], [2, 3], [2, 4], [3, 4], [3, 5], [1, 5]]
 
@@ -29,33 +37,33 @@ export default function OpengraphImage() {
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '72px 80px',
-          backgroundColor: '#f9fafb',
-          borderTop: '12px solid #2563eb',
+          backgroundColor: colors.gray[50],
+          borderTop: `12px solid ${colors.blue[600]}`,
         }}
       >
         <div style={{ display: 'flex', flexDirection: 'column', maxWidth: 640 }}>
-          <div style={{ display: 'flex', fontSize: 28, color: '#374151' }}>
-            Don Branson <span style={{ color: '#9ca3af', margin: '0 14px' }}>/</span> Graph Demos
+          <div style={{ display: 'flex', fontSize: 28, color: colors.gray[700] }}>
+            Don Branson <span style={{ color: colors.gray[400], margin: '0 14px' }}>/</span> Graph Demos
           </div>
-          <div style={{ fontSize: 76, color: '#1f2937', lineHeight: 1.05, marginTop: 28 }}>Graph Visualizations</div>
-          <div style={{ fontSize: 34, color: '#1d4ed8', marginTop: 20 }}>Knowledge Graph &amp; Network Demos</div>
+          <div style={{ fontSize: 76, color: colors.gray[800], lineHeight: 1.05, marginTop: 28 }}>Graph Visualizations</div>
+          <div style={{ fontSize: 34, color: colors.blue[700], marginTop: 20 }}>Knowledge Graph &amp; Network Demos</div>
           <div style={{ display: 'flex', gap: 12, marginTop: 40 }}>
-            {['D3.js', 'Cytoscape.js', 'Leaflet'].map((tag) => (
+            {tags.map(({ label, color }) => (
               <div
-                key={tag}
+                key={label}
                 style={{
                   fontSize: 24,
                   padding: '8px 18px',
                   borderRadius: 6,
-                  backgroundColor: tag === 'Leaflet' ? '#f3e8ff' : '#dbeafe',
-                  color: tag === 'Leaflet' ? '#6b21a8' : '#1e40af',
+                  backgroundColor: color.light,
+                  color: color.text,
                 }}
               >
-                {tag}
+                {label}
               </div>
             ))}
           </div>
-          <div style={{ fontSize: 24, color: '#4b5563', marginTop: 40 }}>
+          <div style={{ fontSize: 24, color: colors.gray[600], marginTop: 40 }}>
             {`${listedDemos.length} interactive demos · graph-viz-next.vercel.app`}
           </div>
         </div>
@@ -67,12 +75,12 @@ export default function OpengraphImage() {
               y1={nodes[a].y}
               x2={nodes[b].x}
               y2={nodes[b].y}
-              stroke="#9ca3af"
+              stroke={graphChrome.edge}
               strokeWidth="4"
             />
           ))}
           {nodes.map((n) => (
-            <circle key={`${n.x}-${n.y}`} cx={n.x} cy={n.y} r={n.r} fill={n.fill} stroke={n.stroke} strokeWidth="4" />
+            <circle key={`${n.x}-${n.y}`} cx={n.x} cy={n.y} r={n.r} fill={n.color.fill} stroke={n.color.border} strokeWidth="4" />
           ))}
         </svg>
       </div>

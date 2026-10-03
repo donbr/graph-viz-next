@@ -468,7 +468,7 @@ const MCPKnowledgeGraph = () => {
         return 10;
       })
       .attr("fill", d => colorForRef.current(d.type).fill)
-      .attr("stroke", d => colorForRef.current(d.type).border)
+      .attr("stroke", graphChrome.nodeStroke)
       .attr("stroke-width", 1.5)
       .on("click", (event, d) => {
         setSelectedNode(d);

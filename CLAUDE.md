@@ -33,11 +33,12 @@ There is no test suite. Verify changes by running `npm run build` and loading th
 - `src/components/DemoShell.tsx`: the shared demo frame. It renders a white header with the breadcrumb, `<h1>`, description, tags and a View Source link, all from the registry, and puts the demo below it in a `max-w-6xl` container. Demo components must not render their own page title or full-page chrome. The Cytoscape timeline demos render as a card that is `lg:h-[800px]` and stacks on smaller screens; do not reintroduce `h-screen`.
 - `src/app/layout.tsx`: renders `SiteHeader` and `SiteFooter`, and holds the SEO metadata (including the `'%s | Don Branson'` title template) and JSON-LD.
 - `SiteHeader` and `SiteFooter` deliberately copy the nav and footer in donbr.github.io's `Layout.tsx`: white nav, a blue-500 underline on the active link, a hamburger menu below `lg`, and a gray-800 footer. Keep the two sites visually in step. Tag colors use the same 100/800 pairs as the portfolio's `tagColorMap`.
+- `src/lib/site.ts`: Open Graph fields shared by the layout and `demoMetadata()`. A route's own `openGraph`/`twitter` replace the layout's objects rather than merging with them, so per-demo share previews must re-include these fields.
 - `src/app/opengraph-image.tsx`: generates the social preview image (`og:image` and `twitter:image`) for every route at build time with `next/og`. Do not add a hardcoded `images` entry to the layout's `openGraph` or `twitter` metadata. No custom font is loaded; text uses Tailwind's default `font-sans` system stack, as donbr.github.io does.
 - `src/utils/colors.ts`: the graph palette every demo uses, built from `tailwindcss/colors`. It has three parts:
   - `categoricalColors(types)` assigns 500 fill / 700 border / 100 badge / 800 text sets to types in the order given. The D3 demos use it, so legend order fixes the colors.
   - Fixed type maps: `lifeSciencesNodeColors`/`EdgeColors` and `temporalNodeColors`/`EdgeColors`.
-  - `graphChrome` for edges, labels, selection, highlight and dimming.
+  - `graphChrome` for edges, labels, selection, highlight and dimming. Selection and highlight are near-black (no palette fill shares it). D3 nodes have a white idle outline, and Cytoscape `node:selected` uses `cytoscapeSelectedStyle` (white border plus a dark underlay ring).
 
   Don't hardcode hex colors or D3 color schemes in a demo; add a map or entry here. The legend `bg-*-500` classes in the demos rely on the same Tailwind values.
 - `src/lib/utils.ts`: the `cn()` helper, combining clsx and tailwind-merge.

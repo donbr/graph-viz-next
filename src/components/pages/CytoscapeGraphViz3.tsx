@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import cytoscape from 'cytoscape';
-import { baseColors, edgeStyle, graphChrome, nodeStyle, temporalEdgeColors, temporalNodeColor, temporalNodeColors } from '../../utils/colors';
+import { baseColors, cytoscapeSelectedStyle, graphChrome, temporalEdgeStyles, temporalNodeColor, temporalNodeStyles } from '../../utils/colors';
 
 // Graph Visualization Component using Cytoscape.js
 const GraphVisualization = ({ graphData, onNodeSelect }) => {
@@ -35,14 +35,10 @@ const GraphVisualization = ({ graphData, onNodeSelect }) => {
     };
 
     // Define node styles based on label
-    const nodeStyles = Object.fromEntries(
-      Object.entries(temporalNodeColors).map(([label, c]) => [label, nodeStyle(c)])
-    );
+    const nodeStyles = temporalNodeStyles;
 
     // Define edge styles based on type
-    const edgeStyles = Object.fromEntries(
-      Object.entries(temporalEdgeColors).map(([type, color]) => [type, edgeStyle(color)])
-    );
+    const edgeStyles = temporalEdgeStyles;
 
     // Create new Cytoscape instance
     cyRef.current = cytoscape({
@@ -54,9 +50,9 @@ const GraphVisualization = ({ graphData, onNodeSelect }) => {
           style: {
             'width': 40,
             'height': 40,
-            'background-color': baseColors.blue.fill,
+            'background-color': baseColors.gray.fill,
             'border-width': 2,
-            'border-color': baseColors.blue.border,
+            'border-color': baseColors.gray.border,
             'label': 'data(name)', // Show name if available, fallback to id
             'color': 'white',
             'text-halign': 'center',
@@ -100,10 +96,7 @@ const GraphVisualization = ({ graphData, onNodeSelect }) => {
         // Selected node style
         {
           selector: 'node:selected',
-          style: {
-            'border-width': 4,
-            'border-color': graphChrome.selected
-          }
+          style: cytoscapeSelectedStyle
         }
       ],
       layout: {

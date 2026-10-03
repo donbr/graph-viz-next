@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteImage, siteOpenGraph } from './site'
 
 // Single source of truth for every demo route. The home grid, header active state,
 // breadcrumb labels, sitemap and per-route metadata all read from this list, so a
@@ -130,10 +131,26 @@ export function demoSourceUrl(demo: Demo): string {
 // turns `name` into "<name> | Don Branson", matching donbr.github.io.
 export function demoMetadata(slug: string): Metadata {
   const demo = requireDemo(slug)
+  // Share previews need their own title and url: openGraph and twitter set here replace
+  // the layout's objects (which point at the home page) instead of merging with them
+  const shareTitle = `${demo.name} | Don Branson`
   return {
     title: demo.name,
     description: demo.description,
     alternates: { canonical: `/${demo.slug}` },
+    openGraph: {
+      ...siteOpenGraph,
+      title: shareTitle,
+      description: demo.description,
+      url: `/${demo.slug}`,
+      images: [siteImage],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: shareTitle,
+      description: demo.description,
+      images: [siteImage],
+    },
   }
 }
 

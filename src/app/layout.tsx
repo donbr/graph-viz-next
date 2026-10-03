@@ -2,6 +2,7 @@ import './globals.css'
 import SiteHeader from '../components/SiteHeader'
 import SiteFooter from '../components/SiteFooter'
 import type { Metadata, Viewport } from 'next'
+import { siteOpenGraph } from '@/lib/site'
 
 // Separate viewport export
 export const viewport: Viewport = {
@@ -30,9 +31,7 @@ export const metadata: Metadata = {
     title: 'Graph Visualizations & AI Demos | Don Branson',
     description: 'Interactive knowledge graph and network visualization demonstrations for AI applications',
     url: 'https://graph-viz-next.vercel.app/',
-    siteName: 'Don Branson\'s Graph Visualization Showcase',
-    locale: 'en_US',
-    type: 'website',
+    ...siteOpenGraph,
   },
   twitter: {
     card: 'summary_large_image',
@@ -91,9 +90,9 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen flex flex-col bg-gray-50">
         <SiteHeader />
-        <div className="flex-grow">
+        <main className="flex-grow">
           {children}
-        </div>
+        </main>
         <SiteFooter />
       </body>
     </html>

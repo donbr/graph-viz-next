@@ -197,7 +197,7 @@ const AirlineAIKnowledgeGraph = () => {
     node.append("circle")
       .attr("r", 20)
       .attr("fill", d => colorFor(d.type).fill)
-      .attr("stroke", d => colorFor(d.type).border)
+      .attr("stroke", graphChrome.nodeStroke)
       .attr("stroke-width", 2);
     
     // Add node labels
@@ -274,7 +274,7 @@ const AirlineAIKnowledgeGraph = () => {
         return highlightedNodes.includes(d.id) ? 25 : 15;
       })
       .attr("stroke", d => {
-        if (highlightedNodes.length === 0) return colorFor(d.type).border;
+        if (highlightedNodes.length === 0) return graphChrome.nodeStroke;
         return highlightedNodes.includes(d.id) ? graphChrome.highlight : graphChrome.dimmed;
       })
       .attr("stroke-width", d => {
