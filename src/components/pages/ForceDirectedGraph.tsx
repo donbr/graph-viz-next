@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
+import { categoricalColors, graphChrome } from '../../utils/colors';
 
 const ForceDirectedGraph = () => {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -14,12 +15,8 @@ const ForceDirectedGraph = () => {
     "Goal", "Feature", "Process", "Output", "Incentive_System"
   ];
 
-  // Accessible color palette used for nodes and legend
-  const accessibleColors = [
-    "#4477AA", "#EE6677", "#228833", "#CCBB44", 
-    "#66CCEE", "#AA3377", "#BBBBBB", "#2C3E50", 
-    "#E67E22", "#16A085", "#2980B9", "#8E44AD"
-  ];
+  // Node and legend colors, assigned in allEntityTypes order
+  const colorFor = categoricalColors(allEntityTypes);
 
   const [enabledTypes, setEnabledTypes] = useState<string[]>(allEntityTypes);
 
@@ -234,7 +231,7 @@ const ForceDirectedGraph = () => {
   useEffect(() => {
     d3.select(svgRef.current)
       .selectAll(".node circle")
-      .attr("stroke", d => (selectedNode && selectedNode.name === d.name ? "#000" : "#fff"))
+      .attr("stroke", d => (selectedNode && selectedNode.name === d.name ? graphChrome.selected : colorFor(d.entityType).border))
       .attr("stroke-width", d => (selectedNode && selectedNode.name === d.name ? 3 : 1.5));
   }, [selectedNode]);
 
@@ -246,10 +243,6 @@ const ForceDirectedGraph = () => {
     // Clear existing SVG
     d3.select(svgRef.current).selectAll("*").remove();
     
-    // Define color scale using the accessible palette
-    const colorScale = d3.scaleOrdinal()
-      .domain(allEntityTypes)
-      .range(accessibleColors);
     
     // Create SVG container with a responsive viewBox
     const svg = d3.select(svgRef.current)
@@ -278,7 +271,7 @@ const ForceDirectedGraph = () => {
       .attr("orient", "auto")
       .append("path")
       .attr("d", "M0,-5L10,0L0,5")
-      .attr("fill", "#999");
+      .attr("fill", graphChrome.edge);
     
     // Transform relations data to use "source" and "target" properties
     const processedLinks = relationsData.map(link => ({
@@ -306,7 +299,7 @@ const ForceDirectedGraph = () => {
       .data(processedLinks)
       .enter().append("line")
       .attr("stroke-width", 1)
-      .attr("stroke", "#999")
+      .attr("stroke", graphChrome.edge)
       .attr("marker-end", "url(#arrow)")
       .on("mouseover", (event, d) => {
         tooltip.transition()
@@ -337,8 +330,8 @@ const ForceDirectedGraph = () => {
     // Add circles to nodes with enhanced interactivity
     node.append("circle")
       .attr("r", d => (d.name === "Decentralized_Content_Framework" ? nodeRadius * 1.5 : nodeRadius))
-      .attr("fill", d => colorScale(d.entityType))
-      .attr("stroke", "#fff")
+      .attr("fill", d => colorFor(d.entityType).fill)
+      .attr("stroke", d => colorFor(d.entityType).border)
       .attr("stroke-width", 1.5)
       .on("click", (event, d) => {
         event.stopPropagation();
@@ -426,10 +419,8 @@ const ForceDirectedGraph = () => {
   };
   
   return (
-    <div className="container mx-auto p-4">
-      <div className="bg-white rounded-lg shadow-lg p-4 mb-4">
-        <h1 className="text-2xl font-bold mb-2 text-center">Decentralized Truth-Anchored Content Framework</h1>
-        <p className="text-gray-600 text-center mb-4">Interactive Visualization of Core Concepts and Relationships</p>
+    <div>
+      <div className="bg-white rounded-lg shadow-md p-4">
         <div className="text-sm mb-4">
           <p><strong>Instructions:</strong> Drag nodes to reposition. Hover over nodes and links for details. Click a node to see detailed observations.</p>
         </div>
@@ -476,7 +467,7 @@ const ForceDirectedGraph = () => {
                     />
                     <div 
                       className="w-4 h-4 rounded-full mr-2"
-                      style={{ backgroundColor: accessibleColors[allEntityTypes.indexOf(type) % accessibleColors.length] }}
+                      style={{ backgroundColor: colorFor(type).fill }}
                     ></div>
                     <span className="text-sm">{type.replace(/_/g, " ")}</span>
                   </div>

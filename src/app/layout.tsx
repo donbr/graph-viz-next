@@ -1,10 +1,7 @@
 import './globals.css'
-import Navigation from '../components/Navigation'
-import Breadcrumb from '../components/Breadcrumb'
-import { Inter } from 'next/font/google'
+import SiteHeader from '../components/SiteHeader'
+import SiteFooter from '../components/SiteFooter'
 import type { Metadata, Viewport } from 'next'
-
-const inter = Inter({ subsets: ['latin'] })
 
 // Separate viewport export
 export const viewport: Viewport = {
@@ -13,7 +10,11 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'Graph Visualizations | Don Branson',
+  // Demo routes set their own title via demoMetadata() in src/lib/demos.ts
+  title: {
+    default: 'Graph Visualizations | Don Branson',
+    template: '%s | Don Branson',
+  },
   description: 'Interactive network and graph visualization demonstrations showcasing AI and knowledge graph applications by Don Branson',
   keywords: ['Graph Visualization', 'Knowledge Graphs', 'Network Analysis', 'D3.js', 'Cytoscape.js', 'GDELT', 'Neo4j', 'AI Engineer'],
   authors: [{ name: 'Don Branson' }],
@@ -30,14 +31,6 @@ export const metadata: Metadata = {
     description: 'Interactive knowledge graph and network visualization demonstrations for AI applications',
     url: 'https://graph-viz-next.vercel.app/',
     siteName: 'Don Branson\'s Graph Visualization Showcase',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Graph visualization showcase by Don Branson',
-      },
-    ],
     locale: 'en_US',
     type: 'website',
   },
@@ -45,7 +38,6 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Graph Visualizations | Don Branson',
     description: 'Interactive knowledge graph and network visualization demonstrations',
-    images: ['/og-image.jpg'],
   },
   verification: {
     google: 'google-site-verification-code', // Add your verification code if you have one
@@ -97,12 +89,12 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.className} min-h-screen flex flex-col bg-gray-50`}>
-        <Navigation />
-        <Breadcrumb />
+      <body className="min-h-screen flex flex-col bg-gray-50">
+        <SiteHeader />
         <div className="flex-grow">
           {children}
         </div>
+        <SiteFooter />
       </body>
     </html>
   )

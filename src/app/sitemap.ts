@@ -1,21 +1,12 @@
 import { MetadataRoute } from 'next'
+import { listedDemos } from '@/lib/demos'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://graph-viz-next.vercel.app'
-  
-  // List of all routes in the application
-  const routes = [
-    '',
-    '/force-directed-graph',
-    '/mcp-graph-visualization',
-    '/cytoscape-graph-viz3',
-    '/life-sciences-graph-viz1',
-    '/gdelt-records-viewer',
-    '/proof-of-truth',
-    '/airline-ai'
-  ]
-  
-  // Generate sitemap entries for each route
+
+  // Home plus every listed demo; unlisted demos stay out of the sitemap
+  const routes = ['', ...listedDemos.map((demo) => `/${demo.slug}`)]
+
   return routes.map(route => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),

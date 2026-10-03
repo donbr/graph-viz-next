@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import cytoscape from 'cytoscape';
+import { baseColors, edgeStyle, graphChrome, nodeStyle, temporalEdgeColors, temporalNodeColor, temporalNodeColors } from '../../utils/colors';
 
 const GraphVisualization = ({ graphData, onNodeSelect }) => {
   const cyRef = useRef(null);
@@ -33,20 +34,14 @@ const GraphVisualization = ({ graphData, onNodeSelect }) => {
     };
 
     // Define node styles based on label
-    const nodeStyles = {
-      'Person': { 'background-color': '#4299e1', 'border-color': '#2b6cb0' },
-      'Company': { 'background-color': '#ed8936', 'border-color': '#c05621' },
-      'Project': { 'background-color': '#48bb78', 'border-color': '#2f855a' },
-      'Technology': { 'background-color': '#9f7aea', 'border-color': '#6b46c1' }
-    };
+    const nodeStyles = Object.fromEntries(
+      Object.entries(temporalNodeColors).map(([label, c]) => [label, nodeStyle(c)])
+    );
 
     // Define edge styles based on type
-    const edgeStyles = {
-      'WORKS_AT': { 'line-color': '#a0aec0', 'target-arrow-color': '#a0aec0' },
-      'MANAGES': { 'line-color': '#fc8181', 'target-arrow-color': '#fc8181' },
-      'WORKS_ON': { 'line-color': '#fbd38d', 'target-arrow-color': '#fbd38d' },
-      'USES': { 'line-color': '#d6bcfa', 'target-arrow-color': '#d6bcfa' }
-    };
+    const edgeStyles = Object.fromEntries(
+      Object.entries(temporalEdgeColors).map(([type, color]) => [type, edgeStyle(color)])
+    );
 
     // Create Cytoscape instance
     cyRef.current = cytoscape({
@@ -58,9 +53,9 @@ const GraphVisualization = ({ graphData, onNodeSelect }) => {
           style: {
             'width': 40,
             'height': 40,
-            'background-color': '#4299e1',
+            'background-color': baseColors.blue.fill,
             'border-width': 2,
-            'border-color': '#2b6cb0',
+            'border-color': baseColors.blue.border,
             'label': 'data(id)',
             'color': 'white',
             'text-halign': 'center',
@@ -73,8 +68,8 @@ const GraphVisualization = ({ graphData, onNodeSelect }) => {
           selector: 'edge',
           style: {
             'width': 2,
-            'line-color': '#a0aec0',
-            'target-arrow-color': '#a0aec0',
+            'line-color': graphChrome.edge,
+            'target-arrow-color': graphChrome.edge,
             'target-arrow-shape': 'triangle',
             'curve-style': 'bezier',
             'label': 'data(label)',
@@ -95,8 +90,7 @@ const GraphVisualization = ({ graphData, onNodeSelect }) => {
           selector: 'node:selected',
           style: {
             'border-width': 4,
-            'border-color': '#fff',
-            'box-shadow': '0 0 0 2px #000'
+            'border-color': graphChrome.selected
           }
         }
       ],
@@ -287,18 +281,17 @@ const CytoscapeGraphViz2 = () => {
   const currentEvent = keyEvents.find(event => event.timestamp === currentTime);
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="flex flex-col lg:h-[800px] bg-white rounded-lg shadow-md overflow-hidden">
       {/* Header */}
-      <header className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 shadow-md">
-        <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Temporal Graph Explorer</h1>
-          <div className="px-4 py-2 bg-white bg-opacity-20 rounded">{formatDate(currentTime)}</div>
+      <header className="bg-white border-b border-gray-200 px-4 py-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="px-3 py-1.5 bg-gray-100 text-gray-800 text-sm font-medium rounded-full">{formatDate(currentTime)}</div>
         </div>
       </header>
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-col lg:flex-row flex-1 lg:overflow-hidden">
         {/* Left Sidebar */}
-        <div className="w-64 bg-white shadow-md p-4 flex flex-col overflow-auto">
+        <div className="w-full lg:w-64 shrink-0 bg-white border-b lg:border-b-0 lg:border-r border-gray-200 p-4 flex flex-col overflow-auto">
           <h2 className="text-lg font-semibold mb-4">Filters</h2>
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1">Node Labels</label>
@@ -359,7 +352,7 @@ const CytoscapeGraphViz2 = () => {
         </div>
 
         {/* Main Panel */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 min-w-0 flex flex-col">
           {/* Timeline Control (hidden if timelineData is empty) */}
           {timelineData.length > 0 && (
             <div className="bg-white border-b p-4 flex flex-col space-y-4">
@@ -418,7 +411,7 @@ const CytoscapeGraphViz2 = () => {
           )}
 
           {/* Graph Visualization */}
-          <div className="flex-1 overflow-auto p-6">
+          <div className="flex-none h-[500px] lg:flex-1 lg:h-auto overflow-auto p-6 bg-gray-50">
             {loading ? (
               <div className="flex items-center justify-center h-full">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
@@ -460,7 +453,7 @@ const CytoscapeGraphViz2 = () => {
         </div>
 
         {/* Right Sidebar - Details Panel */}
-        <div className="w-72 bg-white shadow-md p-4 overflow-auto">
+        <div className="w-full lg:w-72 shrink-0 bg-white border-t lg:border-t-0 lg:border-l border-gray-200 p-4 overflow-auto">
           {selectedNode ? (
             <div>
               <div className="flex justify-between items-center mb-4">
@@ -480,16 +473,8 @@ const CytoscapeGraphViz2 = () => {
                 <div className="text-sm text-gray-500">Label</div>
                 <div className="inline-block px-2 py-1 rounded text-xs font-medium"
                   style={{ 
-                    backgroundColor: 
-                      selectedNode.label === 'Person' ? '#bee3f8' :
-                      selectedNode.label === 'Company' ? '#feebc8' :
-                      selectedNode.label === 'Project' ? '#c6f6d5' :
-                      selectedNode.label === 'Technology' ? '#e9d8fd' : '#bee3f8',
-                    color:
-                      selectedNode.label === 'Person' ? '#2c5282' :
-                      selectedNode.label === 'Company' ? '#7b341e' :
-                      selectedNode.label === 'Project' ? '#276749' :
-                      selectedNode.label === 'Technology' ? '#553c9a' : '#2c5282',
+                    backgroundColor: temporalNodeColor(selectedNode.label).light,
+                    color: temporalNodeColor(selectedNode.label).text,
                   }}
                 >
                   {selectedNode.label}

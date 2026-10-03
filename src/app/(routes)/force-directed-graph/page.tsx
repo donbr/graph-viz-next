@@ -1,8 +1,13 @@
-'use client'
-
-import React from 'react'
 import ForceDirectedGraph from '../../../components/pages/ForceDirectedGraph'
+import DemoShell from '@/components/DemoShell'
+import { demoMetadata } from '@/lib/demos'
+
+export const metadata = demoMetadata('force-directed-graph')
 
 export default function Page() {
-  return <ForceDirectedGraph />
+  return (
+    <DemoShell slug="force-directed-graph">
+      <ForceDirectedGraph />
+    </DemoShell>
+  )
 }
